@@ -67,7 +67,6 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
     last_name = models.CharField(_('Last name'), max_length=50, null=True,
                                  blank=True)
 
-
     is_staff = models.BooleanField(
         _('Staff status'),
         default=False,
