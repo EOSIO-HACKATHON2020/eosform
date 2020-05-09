@@ -102,3 +102,8 @@ AUTH_USER_MODEL = 'users.User'
 LOCALE_PATHS = (
      pathlib.Path(BASE_DIR) / 'locale',
 )
+
+handler400 = 'base.views.page_400'
+handler403 = 'base.views.page_403'
+handler404 = 'base.views.page_404'
+handler500 = 'base.views.page_500'
