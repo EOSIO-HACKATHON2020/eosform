@@ -1,5 +1,5 @@
-SETTINGS = "config.settings.dev"
-PROJ = "config"
+SETTINGS = "conf.settings.dev"
+PROJ = "conf"
 
 run:
 	source .venv/bin/activate; export DJANGO_SETTINGS_MODULE=$(SETTINGS); WERKZEUG_DEBUG_PIN=off python manage.py runserver_plus 0.0.0.0:8000
