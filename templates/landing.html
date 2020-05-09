@@ -1,3 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% block content %}
+<a href="{% url "users:signup" %}">Signup</a>
+<a href="{% url "users:signin" %}">Signin</a>
+{% endblock %}
