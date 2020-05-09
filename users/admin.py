@@ -3,7 +3,8 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from users.models import User
+from .models import User
+from .forms import UserCreationForm
 
 
 @admin.register(User)
@@ -25,13 +26,20 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('last_login',)
         }),
     )
-    form = UserChangeForm
 
-    search_fields = ('first_name', 'last_name', 'email',)
-    list_display = (
-        'email',
-        'is_superuser',
-        'first_name',
-        'last_name',
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
     )
+
+    form = UserChangeForm
+    add_form = UserCreationForm
+
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    search_fields = ('first_name', 'last_name', 'email')
     ordering = ('email',)
+    filter_horizontal = ('groups', 'user_permissions',)
+    search_fields = ('first_name', 'last_name', 'email',)
