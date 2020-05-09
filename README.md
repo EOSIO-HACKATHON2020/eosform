@@ -16,6 +16,9 @@ source .venv/bin/activate
 # put env variables
 touch .env
 pip install -r requirements.txt
+createdb eosform
+export DATABASE_URL=postgres://localhost/eosform
+python manage.py migrate
 ```
 
 ## Run
