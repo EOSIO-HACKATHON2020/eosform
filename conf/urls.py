@@ -8,6 +8,7 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('users/', include('users.urls', namespace='users')),
     path('', LandingView.as_view(), name='landing'),
 ]
 
