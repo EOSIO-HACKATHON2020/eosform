@@ -11,8 +11,7 @@ env.read_env()
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
-SECRET_KEY = env.str('SECRET_KEY',
-                     'u$yhsnu=5f$n6xj8o5jli!a=fqa)+4=7!5f3ng=oxj&*650fxg')
+SECRET_KEY = env.str('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', True)
 
@@ -28,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +92,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 STATIC_URL = '/static/'
+STATIC_ROOT = pathlib.Path(BASE_DIR) / 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = pathlib.Path(BASE_DIR) / 'media'
 
 ADMIN_SITE_HEADER = 'EOSFORM'
+AUTH_USER_MODEL = 'users.User'
+
+LOCALE_PATHS = (
+     pathlib.Path(BASE_DIR) / 'locale',
+)
