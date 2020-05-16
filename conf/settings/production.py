@@ -16,7 +16,7 @@ sentry_sdk.init(
 )
 
 INSTALLED_APPS += (
-    'anymail'
+    'anymail',
 )
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
