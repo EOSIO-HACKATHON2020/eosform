@@ -3,6 +3,7 @@ import dotenv
 import pathlib
 from os.path import dirname
 from os.path import abspath
+from django.urls import reverse_lazy
 
 dotenv.load_dotenv()
 env = environs.Env()
@@ -107,3 +108,4 @@ handler404 = 'base.views.page_404'
 handler500 = 'base.views.page_500'
 
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
+LOGIN_REDIRECT_URL = reverse_lazy('users:dashboard')

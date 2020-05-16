@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.views.generic import TemplateView
 
 
 class LandingView(TemplateView):
     template_name = 'landing.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        return super().get(request, *args, **kwargs)
 
 
 def page_400(request):
