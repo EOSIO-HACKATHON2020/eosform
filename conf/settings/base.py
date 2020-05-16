@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'base',
     'config',
     'users',
+    'surveys',
 ]
 
 MIDDLEWARE = [

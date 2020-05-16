@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+    <h3>{% trans "Signup" %}</h3>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
