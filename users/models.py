@@ -105,8 +105,10 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
             'from_email': from_email,
             'to': [self.email]
         }
-        # TODO enable sending emails
-        # send_email.apply_async(kwargs=mail_kwargs)
+        # logger.info(mail_kwargs)
+        print(mail_kwargs)
+        from .tasks import send_email
+        send_email.apply_async(kwargs=mail_kwargs)
 
     objects = UserManager()
 
