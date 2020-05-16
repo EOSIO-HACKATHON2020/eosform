@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
-    TODO signup
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans "Signup" %}">
+    </form>
 {% endblock %}

@@ -1,15 +1,15 @@
 import environs
 import dotenv
 import pathlib
-import dj_database_url
 from os.path import dirname
 from os.path import abspath
+from django.urls import reverse_lazy
 
 dotenv.load_dotenv()
 env = environs.Env()
 env.read_env()
 
-BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
+BASE_DIR = pathlib.Path(dirname(dirname(dirname(abspath(__file__)))))
 
 SECRET_KEY = env.str('SECRET_KEY')
 
@@ -26,8 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'solo',
     'django_extensions',
 
+    'base',
+    'config',
     'users',
 ]
 
@@ -46,9 +49,7 @@ ROOT_URLCONF = 'conf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            pathlib.Path(BASE_DIR) / 'templates'
-        ],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,9 +64,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'conf.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
-}
+DATABASES = {'default': env.dj_db_url('DATABASE_URL')}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -92,18 +91,21 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 STATIC_URL = '/static/'
-STATIC_ROOT = pathlib.Path(BASE_DIR) / 'static'
+STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = pathlib.Path(BASE_DIR) / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 ADMIN_SITE_HEADER = 'EOSFORM'
 AUTH_USER_MODEL = 'users.User'
 
 LOCALE_PATHS = (
-     pathlib.Path(BASE_DIR) / 'locale',
+     BASE_DIR / 'locale',
 )
 
 handler400 = 'base.views.page_400'
 handler403 = 'base.views.page_403'
 handler404 = 'base.views.page_404'
 handler500 = 'base.views.page_500'
+
+DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
+LOGIN_REDIRECT_URL = reverse_lazy('users:dashboard')

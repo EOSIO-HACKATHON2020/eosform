@@ -16,5 +16,11 @@ sentry_sdk.init(
 )
 
 INSTALLED_APPS += (
-
+    'anymail'
 )
+
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": env.str('MAILGUN_API_KEY'),
+}

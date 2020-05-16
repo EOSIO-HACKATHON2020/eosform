@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,6 +25,11 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'users:signout' %}">{% trans "Signout" %}</a>
+                </li>
+            {% endif %}
         </ul>
       </div>
     </nav>
