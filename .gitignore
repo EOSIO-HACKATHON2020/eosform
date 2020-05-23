@@ -131,3 +131,5 @@ dmypy.json
 .idea
 .vscode
 celerybeat-schedule.db
+
+.DS_Store
