@@ -111,6 +111,7 @@ handler500 = 'base.views.page_500'
 
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
 LOGIN_REDIRECT_URL = reverse_lazy('users:dashboard')
+LOGIN_URL = reverse_lazy('users:signin')
 CACHES = {"default": env.dj_cache_url("CACHE_URL")}
 
 # By default 1 hour
