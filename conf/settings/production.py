@@ -23,4 +23,8 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 ANYMAIL = {
     "MAILGUN_API_KEY": env.str('MAILGUN_API_KEY'),
+    "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
 }
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
