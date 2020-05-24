@@ -29,7 +29,7 @@ class SignupForm(forms.ModelForm):
         instance = super().save(commit=False)
 
         if commit:
-            instance.set_password(instance.password)
+            instance.set_password(self.cleaned_data.get('password'))
             instance.save()
 
         return instance
