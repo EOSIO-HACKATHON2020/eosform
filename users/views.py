@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from .forms import SignupForm
+from surveys.models import Survey
 
 
 logger = logging.getLogger(__name__)
@@ -54,6 +55,12 @@ class SigninView(LoginView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'users/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'surveys': Survey.objects.filter(user=self.request.user)
+        })
+        return super().get_context_data(**kwargs)
 
 
 class SignoutView(LoginRequiredMixin, View):

@@ -3,7 +3,9 @@ import enum
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.urls import reverse
 from users.models import User
+from . import utils
 
 
 class SurveyStatus(enum.IntEnum):
@@ -26,7 +28,8 @@ class Survey(TimeStampedModel):
                              help_text=_('Survey owner'))
     name = models.CharField(_('Name'), max_length=255, null=False, blank=True,
                             default='')
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,
+    uid = models.CharField(default=utils.gen_eos_username,
+                           editable=False, unique=True, max_length=12,
                            null=False, blank=False, db_index=True,
                            help_text=_('UID will be used during EOS upload'))
     status = models.PositiveSmallIntegerField(
@@ -38,6 +41,9 @@ class Survey(TimeStampedModel):
         if self.name:
             return self.name
         return f'{self.uid}'
+
+    def get_absolute_url(self):
+        return reverse('surveys:survey', args=(self.uid,))
 
     class Meta:
         db_table = 'surveys'

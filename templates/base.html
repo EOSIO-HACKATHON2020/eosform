@@ -1,0 +1,52 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lan="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "styles/style.css" %}">
+    <title>EOS Forms</title>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <h4>
+                <a href="{% url "landing" %}">
+                    EOS Forms
+                </a>
+            </h4>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="{% url "landing" %}">{% trans "Home" %}</a>
+            </li>
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url "users:signout" %}">{% trans "Sign out" %}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url "users:signup" %}">{% trans "Sign up" %}</a>
+                </li>
+                <li>
+                    <a href="{% url "users:signin" %}">{% trans "Sign in" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+    <section>
+        {% block content %}{% endblock %}
+    </section>
+    <script src="{% static "scripts/slide.js" %}"></script>
+</body>
+
+</html>

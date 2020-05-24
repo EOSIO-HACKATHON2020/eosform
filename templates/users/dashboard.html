@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
-    TODO dashboard
+    <a href="{% url "surveys:create" %}">{% trans "Create Suvey" %}</a>
+
+    {% for survey in surveys %}
+        <section>
+            <h3>{{ survey.name }}</h3>
+            <h6>{{ suvery.uid }}</h6>
+        </section>
+    {% endfor %}
+
 {% endblock %}
