@@ -83,6 +83,10 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
         default=True,
     )
 
+    is_email_verified = models.BooleanField(
+        _('Is Email Verified?'), default=False, blank=True
+    )
+
     EMAIL_TEMPLATES = {
         'confirm_signup': 'users/emails/confirm_signup.{suffix}',
         'reset_password': 'users/emails/reset_password.{suffix}'
