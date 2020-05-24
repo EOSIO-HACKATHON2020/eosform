@@ -39,6 +39,7 @@ class SignupView(TemplateView):
         form = self.get_form()
         if form.is_valid():
             user = form.save()
+            user.request_confirm_email()
             # TODO add message about success
             logger.info(f'User {user.id} "{user.email}" signed up')
             return HttpResponseRedirect(reverse('users:dashboard'))
