@@ -7,7 +7,12 @@ from django.views.generic import View
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
+from .otp import OTP
+from .models import User
 from .forms import SignupForm
+from . import forms
 from surveys.models import Survey
 
 
@@ -70,3 +75,93 @@ class SignoutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return HttpResponseRedirect(reverse('landing'))
+
+
+class ConfirmSignupView(View):
+    """
+    Confirm signup
+    """
+    def get(self, request, *args, **kwargs):
+        user = self.get_user()
+        otp = OTP('confirm_signup', user.id)
+        code = self.kwargs.get('code')
+        if otp.code != code:
+            raise PermissionDenied
+        else:
+            user.is_email_verified = True
+            user.save()
+            # TODO logger
+            # TODO message
+        return HttpResponseRedirect(reverse('users:signin'))
+
+    def get_user(self) -> User:
+        user_id = self.kwargs.get('pk')
+        return get_object_or_404(User, pk=user_id)
+
+
+class FinishResetPasswordView(TemplateView):
+    template_name = 'users/finish_reset_password.html'
+    form_class = forms.FinishResetPasswordForm
+
+    def get_form(self):
+        return self.form_class(data=self.request.POST or None)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'form': self.get_form()
+        })
+        return super().get_context_data(**kwargs)
+
+    def get(self, request, *args, **kwargs):
+        user = self.get_user()
+        code = self.kwargs.get('code')
+        otp = OTP('reset_password', user.id)
+        if otp.code != code:
+            raise PermissionDenied
+        return super().get(request, *args, **kwargs)
+
+    def get_user(self) -> User:
+        user_id = self.kwargs.get('id')
+        return get_object_or_404(User, pk=user_id)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            user = self.get_user()
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            # TODO logger password changed
+            # TODO message
+            return HttpResponseRedirect(reverse('users:dashboard'))
+        ctx = self.get_context_data(**kwargs)
+        ctx['form'] = form
+        return self.render_to_response(ctx)
+
+
+class ResetPasswordView(TemplateView):
+    template_name = 'users/reset_password.html'
+    form_class = forms.ResetPasswordForm
+
+    def get_form(self):
+        return self.form_class(data=self.request.POST or None)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'form': self.get_form()
+        })
+        return super().get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            user = User.objects.filter(email=email).first()
+            if user:
+                user.reset_password()
+                # TODO logger
+                logger.info('password reset initiated')
+                # TODO message
+            return HttpResponseRedirect(reverse('users:signin'))
+        ctx = self.get_context_data(**kwargs)
+        ctx['form'] = form
+        return self.render_to_response(ctx)

@@ -35,6 +35,7 @@
             <input type="submit" value="{% trans "Submit" %}">
             <input type="hidden" name="next" value="{{ next }}">
             </form>
+            <a href="{% url "users:reset-pass" %}">{% trans "Reset password" %}</a>
         </div>
     </div>
 

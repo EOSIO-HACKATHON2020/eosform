@@ -111,3 +111,32 @@ handler500 = 'base.views.page_500'
 
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
 LOGIN_REDIRECT_URL = reverse_lazy('users:dashboard')
+CACHES = {"default": env.dj_cache_url("CACHE_URL")}
+
+# By default 1 hour
+OTP_EXPIRY = 60 * 60
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': env.str('LOG_LEVEL', default='INFO'),
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': env.str('LOG_LEVEL', default='INFO'),
+            'propagate': True,
+        },
+    }
+}

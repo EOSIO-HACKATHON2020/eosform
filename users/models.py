@@ -8,6 +8,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
+from django.template.loader import render_to_string
+from django.urls import reverse
+from config.models import Settings
+from .otp import OTP
 
 
 logger = logging.getLogger(__name__)
@@ -79,6 +83,14 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
         default=True,
     )
 
+    EMAIL_TEMPLATES = {
+        'confirm_signup': 'users/emails/confirm_signup.{suffix}',
+        'reset_password': 'users/emails/reset_password.{suffix}'
+    }
+
+    def get_email_template(self, name: str, suffix: str = 'txt'):
+        return self.EMAIL_TEMPLATES[name].format(suffix=suffix)
+
     def get_full_name(self):
         """
         Returns the first_name, the middle_name
@@ -108,6 +120,49 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
         # logger.info(mail_kwargs)
         from .tasks import send_email
         send_email.apply_async(kwargs=mail_kwargs)
+
+    def request_confirm_email(self):
+        config = Settings.get_solo()
+        otp = OTP('confirm_signup', self.id)
+        rts = render_to_string
+        link = reverse('users:confirm-signup', kwargs={
+            'pk': self.id,
+            'code': otp.code,
+        })
+        ctx = {
+            'domain': config.domain,
+            # TODO finish the URL
+            'link': f'{config.domain}{link}'
+        }
+        msg = rts(self.get_email_template('confirm_signup'), ctx)
+        msg_html = rts(self.get_email_template('confirm_signup', 'html'), ctx)
+        kwargs = {
+            'subject': _('[eosform] Confirm signup'),
+            'message': msg,
+            'html_message': msg_html,
+        }
+        self.email_user(**kwargs)
+
+    def reset_password(self):
+        config = Settings.get_solo()
+        otp = OTP('reset_password', self.id)
+        link = reverse('users:reset-pass-finish', kwargs={
+            'id': self.id,
+            'code': otp.code,
+        })
+        ctx = {
+            'domain': config.domain,
+            'link': f'{config.domain}{link}'
+        }
+        rts = render_to_string
+        msg = rts(self.get_email_template('reset_password'), ctx)
+        msg_html = rts(self.get_email_template('reset_password', 'html'), ctx)
+        kwargs = {
+            'subject': _('[eosform] Reset password'),
+            'message': msg,
+            'html_message': msg_html,
+        }
+        self.email_user(**kwargs)
 
     objects = UserManager()
 
