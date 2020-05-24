@@ -11,11 +11,15 @@ class CreateSurveyView(LoginRequiredMixin, TemplateView):
 
     def get_form(self):
         return self.form_class(data=self.request.POST or None,
-                               user=self.request.user)
+                               user=self.request.user, prefix='s')
+
+    def get_formset(self):
+        return forms.QuestionFormSet(self.request.POST or None, prefix='q')
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'form': self.get_form()
+            'form': self.get_form(),
+            'formset': self.get_formset(),
         })
         return super().get_context_data(**kwargs)
 
