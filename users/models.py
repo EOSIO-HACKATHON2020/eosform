@@ -106,7 +106,6 @@ class User(PermissionsMixin, TimeStampedModel, AbstractBaseUser):
             'to': [self.email]
         }
         # logger.info(mail_kwargs)
-        print(mail_kwargs)
         from .tasks import send_email
         send_email.apply_async(kwargs=mail_kwargs)
 
