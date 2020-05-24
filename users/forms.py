@@ -43,3 +43,19 @@ class SignupForm(forms.ModelForm):
 #         data = super().clean()
 #         user = User.objects.filter(email=data.get('email')).first()
 #         if user and
+
+
+class ResetPasswordForm(forms.Form):
+    email = forms.EmailField(label=_('Email'), required=True)
+
+
+class FinishResetPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    password_confirm = forms.CharField(widget=forms.PasswordInput,
+                                       required=True)
+
+    def clean(self):
+        data = super().clean()
+        if data['password'] != data['password_confirm']:
+            # TODO what if the password is too weak?
+            raise forms.ValidationError(_('Password do not match'))

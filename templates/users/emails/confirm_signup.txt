@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% blocktrans %}
+Hi!
+
+Thank you for signup on {{domain}}. Please confirm this is your email by clicking:
+
+{{link}}
+
+best regards,
+your eosform team
+{% endblocktrans %}
