@@ -73,4 +73,4 @@ class ResponseForm(forms.Form):
             'answers': list(self.cleaned_data.values())
         }
         r = requests.post(uri, json=payload)
-        return r.content
+        return r.content.decode()
