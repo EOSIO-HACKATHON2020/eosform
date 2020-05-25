@@ -5,6 +5,12 @@
 {% block content %}
     <h3>{{ survey.name }}</h3>
     <h3>{{ survey.uid }}</h3>
+    {% if survey.is_draft %}
+        <a href="{{ survey.get_publish_url }}">{% trans "Publish" %}</a>
+    {% endif %}
+    {% if survey.is_published %}
+        <a href="{{ survey.get_deactivate_url }}">{% trans "Deactivate" %}</a>
+    {% endif %}
     <ul>
     {% for question in survey.questions.all %}
         <li>{{ question }}</li>
