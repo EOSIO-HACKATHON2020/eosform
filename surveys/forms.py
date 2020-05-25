@@ -1,10 +1,12 @@
 from django import forms
+from django.utils.translation import gettext as _
 from django.forms import modelformset_factory
 from .models import Survey
 from .models import Question
 
 
 class SurveyForm(forms.ModelForm):
+    name = forms.CharField(label=_('Name'), required=True)
 
     class Meta:
         model = Survey
