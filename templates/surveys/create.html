@@ -44,6 +44,10 @@
                     el.classList.add("delete-btn")
                 }
 
+                if (field.required) {
+                    el.setAttribute("required", "required")
+                }
+
                 if (field.placeholder) {
                     el.setAttribute("placeholder", field.placeholder)
                 }
@@ -63,7 +67,7 @@
 
                 let fields = [
                     // name
-                    createField({tag: "input", name: "name", placeholder: "name"}),
+                    createField({tag: "input", name: "name", placeholder: "name", required: true}),
                     // description
                     createField({tag: "textarea", name: "description", placeholder: "{% trans "Description" %}"}),
                     {#// type#}
