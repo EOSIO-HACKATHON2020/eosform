@@ -5,6 +5,8 @@
 {% block content %}
     <section>
         <form method="post">
+            {{ form.errors }}
+            {{ formset.errors }}
             {% csrf_token %}
             {{ formset.management_form }}
             {{ form.as_p }}
