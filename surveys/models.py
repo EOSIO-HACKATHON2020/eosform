@@ -109,6 +109,10 @@ class Survey(TimeStampedModel):
             'form': self.uid,
         }
         r = requests.delete(uri, json=payload)
+        if r.status_code == 200:
+            self.status = SurveyStatus.DEACTIVATED.value
+            self.save()
+            return r.content
         return r.json()
 
     class Meta:
