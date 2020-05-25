@@ -51,15 +51,16 @@ class ResponseForm(forms.Form):
 
         for question in self._survey.questions.all():
             field_name = f'field_{question.id}'
-            self.fields[field_name] = forms.CharField(label=question.name,
-                                                      required=True)
+            self.fields[field_name] = forms.CharField(
+                label=question.name, required=True,
+                help_text=question.description)
 
     def send_to_eos(self):
         settings = Settings.get_solo()
         uri = f'{settings.eosgate}/response'
         payload = {
             'form': self._survey.uid,
-            'answers': self.cleaned_data.values()
+            'answers': list(self.cleaned_data.values())
         }
         r = requests.post(uri, json=payload)
         return r.content
