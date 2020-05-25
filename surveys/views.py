@@ -149,8 +149,8 @@ class ResponseView(TemplateView):
             message = form.send_to_eos()
             messages.info(request, _(f'Response submitted: {message}'))
             return HttpResponseRedirect(
-                self.survey.get_response_url(),
-                urlencode({'status': 'success'})
+                f"{self.survey.get_response_url()}?"
+                f"{urlencode({'status': 'success'})}"
             )
 
         ctx = self.get_context_data(**kwargs)
