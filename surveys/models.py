@@ -99,8 +99,7 @@ class Survey(TimeStampedModel):
         if r.status_code == 200:
             self.status = SurveyStatus.PUBLISHED.value
             self.save()
-            return r.content
-        return r.json()
+        return r.content
 
     def deactivate(self) -> str:
         config = Settings.get_solo()
@@ -112,8 +111,7 @@ class Survey(TimeStampedModel):
         if r.status_code == 200:
             self.status = SurveyStatus.DEACTIVATED.value
             self.save()
-            return r.content
-        return r.json()
+        return r.content
 
     class Meta:
         db_table = 'surveys'
