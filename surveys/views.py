@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from . import forms
 from .models import Survey
+from .models import Question
 
 
 class CreateSurveyView(LoginRequiredMixin, TemplateView):
@@ -25,13 +26,22 @@ class CreateSurveyView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
+        formset = self.get_formset()
 
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             survey = form.save()
+
+            for question_form in formset.forms:
+                q: Question = question_form.save()
+                q.survey = survey
+                q.save()
             return HttpResponseRedirect(survey.get_absolute_url())
 
         ctx = self.get_context_data(**kwargs)
-        ctx['form'] = form
+        ctx.update({
+            'form': form,
+            'formset': formset,
+        })
         return self.render_to_response(ctx)
 
 

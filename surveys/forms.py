@@ -31,8 +31,8 @@ QuestionFormSet = modelformset_factory(
     Question, fields=(
         'name',
         'description',
-        'type',
-        'is_required',
+        # 'type',
+        # 'is_required',
     ),
     extra=0,
     max_num=100

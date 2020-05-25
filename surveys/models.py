@@ -68,7 +68,7 @@ class Question(TimeStampedModel):
     Surveys will consist of questions
     """
     survey = models.ForeignKey('surveys.Survey', on_delete=models.CASCADE,
-                               null=False, blank=False,
+                               null=True, blank=False,
                                related_name='questions',
                                verbose_name=_('Question'))
     name = models.TextField(_('Name'), null=False, blank=False)
