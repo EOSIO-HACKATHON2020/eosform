@@ -1,5 +1,7 @@
 import logging
 from typing import Union
+from django.utils.translation import gettext as _
+from django.contrib import messages
 from django.views.generic import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -43,6 +45,9 @@ class CreateSurveyView(LoginRequiredMixin, TemplateView):
                 q: Question = question_form.save()
                 q.survey = survey
                 q.save()
+
+            messages.info(request,
+                          _(f'Survey {survey.uid} created successfully'))
             return HttpResponseRedirect(survey.get_absolute_url())
 
         ctx = self.get_context_data(**kwargs)
@@ -87,13 +92,13 @@ class SurveyActionView(LoginRequiredMixin, View):
             raise Http404()
 
         if survey.is_draft and action == 'publish':
-            data = survey.publish()
+            message = survey.publish()
         elif survey.is_published and action == 'deactivate':
-            data = survey.deactivate()
+            message = survey.deactivate()
         else:
             raise PermissionDenied()
 
-        # TODO message
-        logger.info(f'Survey {survey.uid} action {action}: {data}')
+        messages.info(request, message)
+        logger.info(f'Survey {survey.uid} action {action}: {message}')
 
         return HttpResponseRedirect(survey.get_absolute_url())
