@@ -7,9 +7,8 @@
 
     {% for survey in surveys %}
         <section>
-            <h3>{{ survey.name }}</h3>
-            <h6>{{ survey.uid }}</h6>
-            <h6>{{ survey.id }}</h6>
+            <a href="{{ survey.get_absolute_url }}">{{ survey.name }}</a>
+            <pre>{{ survey.uid }}</pre>
         </section>
     {% endfor %}
 

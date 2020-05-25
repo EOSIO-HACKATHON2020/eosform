@@ -1,9 +1,10 @@
-import uuid
 import enum
+import requests
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.urls import reverse
+from config.models import Settings
 from users.models import User
 from . import utils
 
@@ -44,6 +45,67 @@ class Survey(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('surveys:survey', args=(self.uid,))
+
+    def get_publish_url(self):
+        return reverse('surveys:action', args=(self.uid, 'publish'))
+
+    def get_deactivate_url(self):
+        return reverse('surveys:action', args=(self.uid, 'deactivate'))
+
+    def get_origin(self):
+        if self.id:
+            return Survey.objects.filter(id=self.id).first()
+        return None
+
+    @property
+    def is_draft(self) -> bool:
+        return self.status == SurveyStatus.DRAFT.value
+
+    @property
+    def is_published(self) -> bool:
+        return self.status == SurveyStatus.PUBLISHED.value
+
+    @property
+    def is_deactivated(self) -> bool:
+        return self.status == SurveyStatus.DEACTIVATED.value
+
+    @property
+    def is_publishing(self) -> bool:
+        origin = self.get_origin()
+        if origin and origin.is_draft and self.is_published:
+            return True
+        return False
+
+    @property
+    def is_deactivating(self) -> bool:
+        origin = self.get_origin()
+        if origin and origin.is_published and self.is_deactivated:
+            return True
+        return False
+
+    def publish(self) -> str:
+        """
+        Send the command to the EOSGate service and return trxid or error
+        message
+        :return:
+        """
+        config = Settings.get_solo()
+        uri = f'{config.eosgate}/form'
+        payload = {
+            'form': self.uid,
+            'questions': self.questions.values_list('name', flat=True)
+        }
+        r = requests.post(uri, json=payload)
+        return r.json()
+
+    def deactivate(self) -> str:
+        config = Settings.get_solo()
+        uri = f'{config.eosgate}/form'
+        payload = {
+            'form': self.uid,
+        }
+        r = requests.delete(uri, json=payload)
+        return r.json()
 
     class Meta:
         db_table = 'surveys'
