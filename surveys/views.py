@@ -88,13 +88,15 @@ class SurveyActionView(LoginRequiredMixin, View):
             raise Http404()
 
         action = kwargs.get('action')
-        if action not in ['publish', 'deactivate']:
+        if action not in ['publish', 'delete']:
             raise Http404()
 
         if survey.is_draft and action == 'publish':
-            message = survey.publish()
-        elif survey.is_published and action == 'deactivate':
-            message = survey.deactivate()
+            message = survey.eos_publish()
+        elif survey.is_published and action == 'delete':
+            message = survey.eos_delete()
+            survey.delete()
+            logger.info(f'Deleted survey {survey.uid}')
         else:
             raise PermissionDenied()
 

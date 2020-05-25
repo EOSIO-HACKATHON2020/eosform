@@ -5,14 +5,16 @@
 {% block content %}
     <section>
         <form method="post">
-            {{ form.errors }}
-            {{ formset.errors }}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
             {% csrf_token %}
             {{ formset.management_form }}
             {{ form.as_p }}
-            {# TODO questions formset #}
+            {% if formset.errors %}
+                {{ formset.errors }}
+            {% endif %}
             <div id="q-formset"></div>
-
             <input type="submit" name="submit" value="{% trans "Create Survey" %}">
             <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
         </form>
