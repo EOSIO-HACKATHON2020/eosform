@@ -53,6 +53,7 @@ class CreateSurveyView(LoginRequiredMixin, TemplateView):
                           _(f'Survey {survey.uid} created successfully'))
             return HttpResponseRedirect(survey.get_absolute_url())
 
+        logger.info(formset.errors)
         ctx = self.get_context_data(**kwargs)
         ctx.update({
             'form': form,
