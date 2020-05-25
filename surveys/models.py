@@ -93,7 +93,7 @@ class Survey(TimeStampedModel):
         uri = f'{config.eosgate}/form'
         payload = {
             'form': self.uid,
-            'questions': self.questions.values_list('name', flat=True)
+            'questions': list(self.questions.values_list('name', flat=True))
         }
         r = requests.post(uri, json=payload)
         return r.json()
