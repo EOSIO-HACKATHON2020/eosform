@@ -1,5 +1,6 @@
 import enum
 import requests
+from django.contrib.postgres.fields import ArrayField
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -51,6 +52,11 @@ class Survey(TimeStampedModel):
 
     def get_delete_url(self):
         return reverse('surveys:action', args=(self.uid, 'delete'))
+
+    def get_response_url(self):
+        settings = Settings.get_solo()
+        return f'{settings.domain}' \
+               f'{reverse("surveys:response", args=(self.uid,))}'
 
     def get_origin(self):
         if self.id:

@@ -1,5 +1,7 @@
 import logging
 from typing import Union
+from django.urls import reverse
+from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.views.generic import View
@@ -9,6 +11,7 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from . import forms
+from .models import SurveyStatus
 from .models import Survey
 from .models import Question
 
@@ -104,3 +107,50 @@ class SurveyActionView(LoginRequiredMixin, View):
         logger.info(f'Survey {survey.uid} action {action}: {message}')
 
         return HttpResponseRedirect(survey.get_absolute_url())
+
+
+class ResponseView(TemplateView):
+    template_name = "surveys/response.html"
+    form_class = forms.ResponseForm
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.survey = None
+
+    def get_object(self):
+        params = {
+            'uid': self.kwargs.get('uid'),
+            'status': SurveyStatus.PUBLISHED.value
+        }
+        return Survey.objects.filter(**params).first()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.survey = self.get_object()
+
+        if not self.survey:
+            raise Http404()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form(self):
+        return self.form_class(data=self.request.POST or None,
+                               survey=self.survey)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'form': self.get_form()
+        })
+        return super().get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+
+        if form.is_valid():
+            message = form.send_to_eos()
+            messages.info(request, _(f'Response submitted: {message}'))
+            return HttpResponseRedirect(
+                reverse('surveys:survey'), urlencode({'status': 'success'})
+            )
+
+        ctx = self.get_context_data(**kwargs)
+        ctx['form'] = form
+        return self.render_to_response(ctx)

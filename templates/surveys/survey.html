@@ -9,6 +9,10 @@
         <a href="{{ survey.get_publish_url }}">{% trans "Publish" %}</a>
     {% endif %}
     {% if survey.is_published %}
+        <div>
+            <span>{% trans "Response URL to share:" %}</span>
+            <a href="{{ survey.get_response_url }}">{{ survey.get_response_url }}</a>
+        </div>
         <a href="{{ survey.get_delete_url }}">{% trans "Delete" %}</a>
     {% endif %}
     <ul>
