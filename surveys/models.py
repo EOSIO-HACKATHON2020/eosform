@@ -96,6 +96,10 @@ class Survey(TimeStampedModel):
             'questions': list(self.questions.values_list('name', flat=True))
         }
         r = requests.post(uri, json=payload)
+        if r.status_code == 200:
+            self.status = SurveyStatus.PUBLISHED.value
+            self.save()
+            return r.content
         return r.json()
 
     def deactivate(self) -> str:
