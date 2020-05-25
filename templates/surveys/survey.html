@@ -9,7 +9,7 @@
         <a href="{{ survey.get_publish_url }}">{% trans "Publish" %}</a>
     {% endif %}
     {% if survey.is_published %}
-        <a href="{{ survey.get_deactivate_url }}">{% trans "Deactivate" %}</a>
+        <a href="{{ survey.get_delete_url }}">{% trans "Delete" %}</a>
     {% endif %}
     <ul>
     {% for question in survey.questions.all %}

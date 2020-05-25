@@ -12,7 +12,7 @@ from . import utils
 class SurveyStatus(enum.IntEnum):
     DRAFT = 1
     PUBLISHED = 2
-    DEACTIVATED = 3
+    DELETED = 3
 
     @classmethod
     def choices(cls):
@@ -49,8 +49,8 @@ class Survey(TimeStampedModel):
     def get_publish_url(self):
         return reverse('surveys:action', args=(self.uid, 'publish'))
 
-    def get_deactivate_url(self):
-        return reverse('surveys:action', args=(self.uid, 'deactivate'))
+    def get_delete_url(self):
+        return reverse('surveys:action', args=(self.uid, 'delete'))
 
     def get_origin(self):
         if self.id:
@@ -66,8 +66,8 @@ class Survey(TimeStampedModel):
         return self.status == SurveyStatus.PUBLISHED.value
 
     @property
-    def is_deactivated(self) -> bool:
-        return self.status == SurveyStatus.DEACTIVATED.value
+    def is_deleted(self) -> bool:
+        return self.status == SurveyStatus.DELETED.value
 
     @property
     def is_publishing(self) -> bool:
@@ -77,13 +77,13 @@ class Survey(TimeStampedModel):
         return False
 
     @property
-    def is_deactivating(self) -> bool:
+    def is_deleting(self) -> bool:
         origin = self.get_origin()
-        if origin and origin.is_published and self.is_deactivated:
+        if origin and origin.is_published and self.is_deleted:
             return True
         return False
 
-    def publish(self) -> str:
+    def eos_publish(self) -> str:
         """
         Send the command to the EOSGate service and return trxid or error
         message
@@ -101,16 +101,13 @@ class Survey(TimeStampedModel):
             self.save()
         return r.content.decode()
 
-    def deactivate(self) -> str:
+    def eos_delete(self) -> str:
         config = Settings.get_solo()
         uri = f'{config.eosgate}/form'
         payload = {
             'form': self.uid,
         }
         r = requests.delete(uri, json=payload)
-        if r.status_code == 200:
-            self.status = SurveyStatus.DEACTIVATED.value
-            self.save()
         return r.content.decode()
 
     class Meta:
