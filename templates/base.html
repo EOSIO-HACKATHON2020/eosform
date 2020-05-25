@@ -46,7 +46,9 @@
     <section>
         {% block content %}{% endblock %}
     </section>
-    <script src="{% static "scripts/slide.js" %}"></script>
+    {% block js %}
+        <script src="{% static "scripts/slide.js" %}"></script>
+    {% endblock %}
 </body>
 
 </html>

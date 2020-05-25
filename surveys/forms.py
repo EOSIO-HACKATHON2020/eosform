@@ -1,5 +1,7 @@
 from django import forms
+from django.forms import modelformset_factory
 from .models import Survey
+from .models import Question
 
 
 class SurveyForm(forms.ModelForm):
@@ -23,3 +25,15 @@ class SurveyForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+
+QuestionFormSet = modelformset_factory(
+    Question, fields=(
+        'name',
+        'description',
+        'type',
+        'is_required',
+    ),
+    extra=0,
+    max_num=100
+)

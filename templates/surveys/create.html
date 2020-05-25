@@ -6,8 +6,73 @@
     <section>
         <form method="post">
             {% csrf_token %}
+            {{ formset.management_form }}
             {{ form.as_p }}
-            <input type="submit" value="{% trans "Create Survey" %}">
+            {# TODO questions formset #}
+            <div id="q-formset"></div>
+
+            <input type="submit" name="submit" value="{% trans "Create Survey" %}">
+            <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
         </form>
     </section>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+        (function() {
+            let q = {
+                element: document.querySelector('#q-formset'),
+                addBtn: document.querySelector('#q-add'),
+            }
+
+            function createField(field) {
+                let el = document.createElement(field.tag);
+                el.setAttribute("name", field.name);
+
+                if (field.placeholder) {
+                    el.setAttribute("placeholder", field.placeholder)
+                }
+
+                if (field.type) {
+                    el.setAttribute("type", field.type)
+                }
+
+                if (field.value) {
+                    el.setAttribute("value", field.value)
+                }
+                return el
+            }
+
+            // Create form
+            function addQuestionsForm() {
+                let fields = [
+                    // name
+                    createField({tag: "input", name: "name", placeholder: "name"}),
+                    // description
+                    createField({tag: "textarea", name: "description", placeholder: "Description"}),
+                    // type
+                    createField({tag: "select", name: "type", options: []}),
+                    // isRequired
+                    createField({tag: "input", type: "checkbox", name: "is_required", }),
+                    // delete button
+                    createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
+                ]
+                let divElement = document.createElement('div')
+                fields.forEach((field) => {
+                    divElement.appendChild(field)
+                })
+                return divElement
+            }
+            q.addBtn.onclick = function() {
+                q.element.appendChild(addQuestionsForm())
+                let delBtns = document.querySelectorAll('input[name="delete"]')
+                delBtns.forEach((btn) => {
+                    btn.onclick = function(e) {
+                        e.target.parentElement.remove()
+                    }
+                })
+            }
+        })();
+    </script>
 {% endblock %}
