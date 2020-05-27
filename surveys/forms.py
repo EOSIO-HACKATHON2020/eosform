@@ -1,10 +1,15 @@
+import requests
 from django import forms
+from django.forms import BaseFormSet
+from django.utils.translation import gettext as _
 from django.forms import modelformset_factory
+from config.models import Settings
 from .models import Survey
 from .models import Question
 
 
 class SurveyForm(forms.ModelForm):
+    name = forms.CharField(label=_('Name'), required=True)
 
     class Meta:
         model = Survey
@@ -27,13 +32,45 @@ class SurveyForm(forms.ModelForm):
         return instance
 
 
+class BaseQuestionFormSet(BaseFormSet):
+
+    def clean(self):
+        super().clean()
+        if not self.forms:
+            raise forms.ValidationError(_('At least one question is required'))
+
+
 QuestionFormSet = modelformset_factory(
     Question, fields=(
         'name',
         'description',
-        'type',
-        'is_required',
+        # 'type',
+        # 'is_required',
     ),
+    formset=BaseQuestionFormSet,
     extra=0,
     max_num=100
 )
+
+
+class ResponseForm(forms.Form):
+
+    def __init__(self, survey, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._survey = survey
+
+        for question in self._survey.questions.all():
+            field_name = f'field_{question.id}'
+            self.fields[field_name] = forms.CharField(
+                label=question.name, required=True,
+                help_text=question.description)
+
+    def send_to_eos(self):
+        settings = Settings.get_solo()
+        uri = f'{settings.eosgate}/response'
+        payload = {
+            'form': self._survey.uid,
+            'answers': list(self.cleaned_data.values())
+        }
+        r = requests.post(uri, json=payload)
+        return r.content.decode()

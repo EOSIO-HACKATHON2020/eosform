@@ -5,12 +5,19 @@
 {% block content %}
     <section>
         <form method="post">
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
             {% csrf_token %}
             {{ formset.management_form }}
             {{ form.as_p }}
-            {# TODO questions formset #}
+            {% if formset.non_form_errors %}
+                {{ formset.non_form_errors }}
+            {% endif %}
+            {% if formset.errors %}
+                {{ formset.errors }}
+            {% endif %}
             <div id="q-formset"></div>
-
             <input type="submit" name="submit" value="{% trans "Create Survey" %}">
             <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
         </form>
@@ -24,11 +31,25 @@
             let q = {
                 element: document.querySelector('#q-formset'),
                 addBtn: document.querySelector('#q-add'),
+
+                counter: 0,
+                forms: {
+                    total: 0,
+                    input: document.querySelector('input[name="q-TOTAL_FORMS"]'),
+                }
             }
 
             function createField(field) {
                 let el = document.createElement(field.tag);
-                el.setAttribute("name", field.name);
+                el.setAttribute("name", `q-${q.counter}-${field.name}`);
+
+                if (field.name === "delete") {
+                    el.classList.add("delete-btn")
+                }
+
+                if (field.required) {
+                    el.setAttribute("required", "required")
+                }
 
                 if (field.placeholder) {
                     el.setAttribute("placeholder", field.placeholder)
@@ -46,15 +67,16 @@
 
             // Create form
             function addQuestionsForm() {
+
                 let fields = [
                     // name
-                    createField({tag: "input", name: "name", placeholder: "name"}),
+                    createField({tag: "input", name: "name", placeholder: "name", required: true}),
                     // description
-                    createField({tag: "textarea", name: "description", placeholder: "Description"}),
-                    // type
-                    createField({tag: "select", name: "type", options: []}),
-                    // isRequired
-                    createField({tag: "input", type: "checkbox", name: "is_required", }),
+                    createField({tag: "textarea", name: "description", placeholder: "{% trans "Description" %}"}),
+                    {#// type#}
+                    {#createField({tag: "select", name: "type", options: []}),#}
+                    {#// isRequired#}
+                    {#createField({tag: "input", type: "checkbox", name: "is_required", }),#}
                     // delete button
                     createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
                 ]
@@ -62,14 +84,19 @@
                 fields.forEach((field) => {
                     divElement.appendChild(field)
                 })
+                q.counter += 1;
+                q.forms.total += 1;
                 return divElement
             }
             q.addBtn.onclick = function() {
                 q.element.appendChild(addQuestionsForm())
-                let delBtns = document.querySelectorAll('input[name="delete"]')
-                delBtns.forEach((btn) => {
+                q.forms.input.value = q.forms.total;
+                let btns = document.querySelectorAll('.delete-btn')
+                btns.forEach((btn) => {
                     btn.onclick = function(e) {
-                        e.target.parentElement.remove()
+                        q.forms.total -= 1;
+                        q.forms.input.value = q.forms.total;
+                        e.target.parentElement.remove();
                     }
                 })
             }
