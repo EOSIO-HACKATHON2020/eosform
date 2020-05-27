@@ -2,6 +2,7 @@
     margin:0px;
     padding:0px;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 nav{
@@ -18,7 +19,7 @@ nav{
     text-transform: uppercase;
     font-size: 20px;
     display: inline;
-}   
+}
 
 .logo img{
     max-height: 42px;
