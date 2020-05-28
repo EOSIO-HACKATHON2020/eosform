@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "styles/signin.css" %}">
+{% endblock %}
 
 {% block content %}
 
@@ -12,7 +18,7 @@
 
         <div class="login-form">
             <div class="control-group">
-                <input type="text" class="login-field" value="" placeholder="username" id="login-name">
+                <input type="text" class="login-field" value="" placeholder="email" id="login-name">
                 <label class="login-field-icon fui-user" for="login-name"></label>
             </div>
 
