@@ -21,12 +21,12 @@
                 {% csrf_token %}
 
             <div class="control-group">
-                <input type="text" name="{{ form.email.html_name }}" class="login-field" value="{{ form.email.value }}" placeholder="{{ form.email.placeholder }}" id="login-name">
+                <input type="text" name="{{ form.username.html_name }}" class="login-field" value="{{ form.username.value|default_if_none:"" }}" placeholder="{{ form.username.placeholder }}" id="login-name">
                 <label class="login-field-icon fui-user" for="login-name"></label>
             </div>
 
             <div class="control-group">
-                <input type="password" class="login-field" name="{{ form.password.html_name }}" value="{{ form.password.value }}" placeholder="{{ form.password.placeholder }}" id="login-pass">
+                <input type="password" class="login-field" name="{{ form.password.html_name }}" value="{{ form.password.value|default_if_none:"" }}" placeholder="{{ form.password.placeholder }}" id="login-pass">
                 <label class="login-field-icon fui-lock" for="login-pass"></label>
             </div>
 
