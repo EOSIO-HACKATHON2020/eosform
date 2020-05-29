@@ -6,6 +6,7 @@
 - Python 3.8
 - Django 3.0+
 - PostgreSQL 11+
+- poetry
 
 ## Install
 

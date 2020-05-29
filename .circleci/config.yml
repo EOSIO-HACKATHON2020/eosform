@@ -1,21 +1,42 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.2.1
+  poetry: frameio/poetry@0.14.6
 
 jobs:
-  build-and-test:
-    executor: python/default
+  build:
+    working_directory: ~/eosform
+    docker:
+      - image: circleci/python:3.8.3
+        environment:
+          DEBUG: false
+          SECRET_KEY: 123456789
+          DJANGO_SETTINGS_MODULE: conf.settings.dev
+          BROKER_URL: redis://localhost/10
+          WERKZEUG_DEBUG_PIN: off
+          DEFAULT_FROM_EMAIL: eosform@example.com
+          CACHE_URL: redis://localhost/0
+          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+          EMAIL_HOST: smtp.example.com
+          EMAIL_HOST_USER: user
+          EMAIL_HOST_PASSWORD: pass
+          EMAIL_PORT: 2525
+      - image: circleci/postgres:12.3
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: circle_test
+      - image: circleci/redis
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-      - run:
-          command: ./manage.py test
-          name: Test
-
-workflows:
-  main:
-    jobs:
-      - build-and-test
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "poetry.lock" }}
+      - run: |
+          poetry install
+      - run: |
+          poetry run python manage.py test
+      - save_cache:
+          key: deps-{{ checksum "poetry.lock" }}
+          paths:
+            - /home/circleci/.cache/pypoetry/virtualenvs
