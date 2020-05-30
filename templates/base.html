@@ -24,9 +24,15 @@
             <li>
                 <a href="{% url "landing" %}">{% trans "Home" %}</a>
             </li>
+            <li>
+                <a href="{% url "users:dashboard" %}">{% trans "Dashboard" %}</a>
+            </li>
             {% if request.user.is_authenticated %}
             <li>
-                <a href="{% url "surveys:create" %}">{% trans "Create" %}</a>
+                <a href="{% url "surveys:create" %}">{% trans "Survey" %}</a>
+            </li>
+            <li>
+                <a href="{% url "surveys:response" %}">{% trans "Response" %}</a>
             </li>
             <li>
                 <a href="{% url "users:signout" %}">{% trans "Sign out" %}</a>
