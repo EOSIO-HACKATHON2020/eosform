@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "styles/create.css" %}">
+{% endblock %}
 
 {% block content %}
-    <section>
-        <form method="post">
+
+    <div class="create-form">
+        <form action="" method="post">
             {% if form.errors %}
                 {{ form.errors }}
             {% endif %}
@@ -17,11 +23,18 @@
             {% if formset.errors %}
                 {{ formset.errors }}
             {% endif %}
-            <div id="q-formset"></div>
-            <input type="submit" name="submit" value="{% trans "Create Survey" %}">
-            <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
+            <div class="questions" id="q-formset"></div>
+            <div class="create-controllers">
+                <div class="create-btn">
+                    <input type="submit" name="submit" value="{% trans "Create Survey" %}">
+                </div>
+                <div class="inc-btn">
+                    <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
+                </div>
+            </div>
         </form>
-    </section>
+    </div>
+
 {% endblock %}
 
 {% block js %}
