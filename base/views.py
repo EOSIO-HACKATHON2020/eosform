@@ -2,10 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.views.generic import TemplateView
+from eos import EOS
 
 
 class LandingView(TemplateView):
     template_name = 'landing.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'eos': EOS()
+        })
+        return super().get_context_data(**kwargs)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
