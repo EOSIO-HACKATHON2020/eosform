@@ -21,11 +21,6 @@ class LandingView(TemplateView):
         })
         return super().get_context_data(**kwargs)
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        return super().get(request, *args, **kwargs)
-
 
 def page_400(request):
     return render('400.html', {}, status=400)

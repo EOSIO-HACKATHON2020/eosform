@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "styles/create.css" %}">
+{% endblock %}
 
 {% block content %}
-    <section>
-        <form method="post">
+
+    <div class="create-form">
+        <form action="" method="post">
             {% if form.errors %}
                 {{ form.errors }}
             {% endif %}
             {% csrf_token %}
             {{ formset.management_form }}
-            {{ form.as_p }}
+            <input type="text" name="{{ form.name.html_name }}" placeholder="{{ form.name.placeholder }}" value="{{ form.name.value|default_if_none:"" }}">
             {% if formset.non_form_errors %}
                 {{ formset.non_form_errors }}
             {% endif %}
             {% if formset.errors %}
                 {{ formset.errors }}
             {% endif %}
-            <div id="q-formset"></div>
-            <input type="submit" name="submit" value="{% trans "Create Survey" %}">
-            <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
+            <div class="questions" id="q-formset"></div>
+            <div class="create-controllers">
+                    <button type="submit" class="create-btn" name="submit">{% trans "Create Survey" %}</button>
+                    <button type="button" class="inc-btn" name="add-question" id="q-add" value="{% trans "+" %}">{% trans "+" %}</button>
+            </div>
         </form>
-    </section>
+    </div>
+
 {% endblock %}
 
 {% block js %}
