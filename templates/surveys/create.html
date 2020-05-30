@@ -16,7 +16,7 @@
             {% endif %}
             {% csrf_token %}
             {{ formset.management_form }}
-            {{ form.as_p }}
+            <input type="text" name="{{ form.name.html_name }}" placeholder="{{ form.name.placeholder }}" value="{{ form.name.value|default_if_none:"" }}">
             {% if formset.non_form_errors %}
                 {{ formset.non_form_errors }}
             {% endif %}
@@ -25,12 +25,8 @@
             {% endif %}
             <div class="questions" id="q-formset"></div>
             <div class="create-controllers">
-                <div class="create-btn">
-                    <input type="submit" name="submit" value="{% trans "Create Survey" %}">
-                </div>
-                <div class="inc-btn">
-                    <input type="button" name="add-question" id="q-add" value="{% trans "+" %}">
-                </div>
+                    <button type="submit" class="create-btn" name="submit">{% trans "Create Survey" %}</button>
+                    <button type="button" class="inc-btn" name="add-question" id="q-add" value="{% trans "+" %}">{% trans "+" %}</button>
             </div>
         </form>
     </div>
