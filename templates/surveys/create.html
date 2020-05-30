@@ -17,7 +17,7 @@
             {% csrf_token %}
             {{ formset.management_form }}
             {{ form.name.label_tag }}
-            <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.auto_id }}" placeholder="{{ form.name.placeholder }}" value="{{ form.name.value|default_if_none:"" }}">
+            <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.auto_id }}" placeholder="{% trans "Name" %}" value="{{ form.name.value|default_if_none:"" }}">
             {% if formset.non_form_errors %}
                 {{ formset.non_form_errors }}
             {% endif %}
@@ -80,15 +80,15 @@
 
                 let fields = [
                     // name
-                    createField({tag: "input", name: "name", placeholder: "name", required: true}),
+                    createField({tag: "input", name: "name", placeholder: "{% trans "Question" %}", required: true}),
+                    // delete button
+                    createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
                     // description
-                    createField({tag: "textarea", name: "description", placeholder: "{% trans "Description" %}"}),
+                    createField({tag: "input", name: "description", placeholder: "{% trans "Description" %}"}),
                     {#// type#}
                     {#createField({tag: "select", name: "type", options: []}),#}
                     {#// isRequired#}
                     {#createField({tag: "input", type: "checkbox", name: "is_required", }),#}
-                    // delete button
-                    createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
                 ]
                 // TODO remove or update
                 // let divElement = document.createElement('div')
