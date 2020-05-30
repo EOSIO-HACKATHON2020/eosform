@@ -26,5 +26,9 @@
 
         <a class="btn" href="{% url "users:signup" %}">{% trans "Sign up" %}</a>
     </div>
+    <div>
+        {% trans "forms:" %} {{ eos.forms }}
+        {% trans "responses:" %} {{ eos.responses }}
+    </div>
 </div>
 {% endblock %}

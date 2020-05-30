@@ -1,5 +1,9 @@
+import logging
 import requests
 from config.models import Settings
+
+
+logger = logging.getLogger(__name__)
 
 
 class EOS:
@@ -30,13 +34,17 @@ class EOS:
             # decrementing that value)
             'limit': 10000
         }
-        return requests.post(
-            f'{self.uri}/v1/chain/get_table_rows',
+        resp = requests.post(
+            f'{self.api}/v1/chain/get_table_rows',
             json=payload
-        ).json()['rows']
+        )
+        if resp.status_code == 200:
+            return resp.json()['rows']
+        logger.error(f'EOS get_table_rows: {resp.content.decode()}')
+        return []
 
     def forms(self):
-        return len(self.get_table_rows('forms'))
+        return len(self.get_table_rows('form'))
 
     def responses(self):
-        return len(self.get_table_rows('responses'))
+        return len(self.get_table_rows('response'))
