@@ -5,14 +5,6 @@
 
 {% block content %}
     {% for survey in surveys %}
-        <section>
-            <h3>
-                <a href="{{ survey.get_absolute_url }}">{{ survey.name }}</a>
-            </h3>
-            <div>
-                <a href="{{ survey.get_response_url }}" target="_blank">{% trans "Response URL" %}</a>
-                <pre>{{ survey.uid }}</pre>
-            </div>
-        </section>
+        {% include "includes/survey.html" with survey=survey %}
     {% endfor %}
 {% endblock %}
