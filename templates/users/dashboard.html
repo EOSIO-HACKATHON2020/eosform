@@ -3,8 +3,6 @@
 {% load i18n %}
 
 {% block content %}
-    <a href="{% url "surveys:create" %}">{% trans "Create Survey" %}</a>
-
     {% for survey in surveys %}
         <section>
             <h3>
@@ -16,5 +14,4 @@
             </div>
         </section>
     {% endfor %}
-
 {% endblock %}
