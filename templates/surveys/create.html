@@ -90,11 +90,9 @@
                     {#// isRequired#}
                     {#createField({tag: "input", type: "checkbox", name: "is_required", }),#}
                 ]
-                // TODO remove or update
-                // let divElement = document.createElement('div')
+                let divElement = document.createElement('div')
                 fields.forEach((field) => {
-                    // divElement.appendChild(field)
-                    q.element.append(field)
+                    divElement.appendChild(field)
                 })
                 q.counter += 1;
                 q.forms.total += 1;
