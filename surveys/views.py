@@ -123,6 +123,11 @@ class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
         if self.request.user.is_anonymous:
             return False
 
+        if self.request.user.is_authenticated and \
+                not self.request.user.is_email_verified:
+            logger.info(_(f'You must verify your email first'))
+            return False
+
         has_participated = Participation.objects.filter(
             user=self.request.user, survey=self.survey).exists()
 
