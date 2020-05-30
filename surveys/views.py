@@ -1,11 +1,11 @@
 import logging
 from typing import Union
-from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.views.generic import View
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
@@ -14,6 +14,7 @@ from . import forms
 from .models import SurveyStatus
 from .models import Survey
 from .models import Question
+from .models import Participation
 
 
 logger = logging.getLogger(__name__)
@@ -110,13 +111,26 @@ class SurveyActionView(LoginRequiredMixin, View):
         return HttpResponseRedirect(survey.get_absolute_url())
 
 
-class ResponseView(TemplateView):
+class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     template_name = "surveys/response.html"
     form_class = forms.ResponseForm
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.survey = None
+
+    def test_func(self) -> bool:
+        if self.request.user.is_anonymous:
+            return False
+
+        has_participated = Participation.objects.filter(
+            user=self.request.user, survey=self.survey).exists()
+
+        if has_participated:
+            messages.warning(self.request,
+                             _('You have already participated in this survey'))
+            return False
+        return True
 
     def get_object(self):
         params = {
@@ -134,7 +148,7 @@ class ResponseView(TemplateView):
 
     def get_form(self):
         return self.form_class(data=self.request.POST or None,
-                               survey=self.survey)
+                               survey=self.survey, user=self.request.user)
 
     def get_context_data(self, **kwargs):
         kwargs.update({

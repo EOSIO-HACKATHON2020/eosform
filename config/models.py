@@ -9,6 +9,11 @@ class Settings(SingletonModel):
                              help_text=_('e.g. https://beta.eosform.app'))
     eosgate = models.URLField(_('EOSGate URI'), blank=True, null=True,
                               help_text=_('e.g. http://localhost:8080'))
+    eos_account = models.CharField(_('EOS Account'), max_length=12, null=True,
+                                   blank=True)
+    eos_node_uri = models.URLField(
+        _('EOS Node URI'), blank=True, null=True,
+        help_text=_('e.g. https://api.testnet.eos.io'))
 
     def __str__(self):
         return _('Settings')

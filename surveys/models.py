@@ -158,3 +158,17 @@ class Question(TimeStampedModel):
 
     class Meta:
         db_table = 'questions'
+
+
+class Participation(TimeStampedModel):
+    """
+    User that passed
+    """
+    user = models.ForeignKey('users.User', related_name='surveys_participated',
+                             on_delete=models.CASCADE, null=True,
+                             blank=True)
+    survey = models.ForeignKey('surveys.Survey', related_name='users',
+                               on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        unique_together = ('user', 'survey')
