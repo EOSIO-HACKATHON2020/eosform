@@ -63,16 +63,18 @@ class CreateSurveyView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(ctx)
 
 
-class SurveyView(LoginRequiredMixin, TemplateView):
+class SurveyView(TemplateView):
     template_name = 'surveys/survey.html'
 
-    def get_object(self):
+    def get_object(self) -> Union[None, Survey]:
         uid = self.kwargs.get('uid')
-        return Survey.objects.filter(user=self.request.user).filter(uid=uid)\
-            .first()
+        survey = Survey.objects.filter(uid=uid).first()
+        user = self.request.user
 
-    def get_queryset(self):
-        return Survey.objects.filter(user=self.request.user)
+        if survey:
+            if survey.is_published or survey.is_draft and survey.user == user:
+                return survey
+        return None
 
     def get_context_data(self, **kwargs):
         kwargs.update({
