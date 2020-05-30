@@ -1,6 +1,7 @@
 import logging
 import requests
 from config.models import Settings
+from surveys.models import Participation
 
 
 logger = logging.getLogger(__name__)
@@ -43,8 +44,15 @@ class EOS:
         logger.error(f'EOS get_table_rows: {resp.content.decode()}')
         return []
 
-    def forms(self):
+    def forms(self) -> int:
+        """
+        That is just demonstration how to request table data using EOS Node API
+        :return: how many forms were created
+        """
         return len(self.get_table_rows('form'))
 
-    def responses(self):
-        return len(self.get_table_rows('response'))
+    def responses(self) -> int:
+        """
+        :return: How many responses were given
+        """
+        return Participation.objects.count()
