@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.utils.translation import gettext as _
 from .models import Survey
 from .models import Question
+from .models import Participation
 
 
 class QuestionInline(admin.TabularInline):
@@ -68,3 +70,29 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = [
         'name',
     ]
+
+
+@admin.register(Participation)
+class ParticipationAdmin(admin.ModelAdmin):
+    list_display = [
+        'txid',
+        'survey_name',
+        'user',
+        'modified',
+        'created',
+    ]
+    list_filter = [
+        'created',
+        'modified',
+    ]
+    search_fields = [
+        'txid',
+        'survey__uid',
+        'survey__name',
+    ]
+
+    def survey_name(self, obj):
+        return obj.survey.uid
+
+    survey_name.short_description = _('Survey UID')
+

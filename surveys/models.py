@@ -169,7 +169,8 @@ class Participation(TimeStampedModel):
                              blank=True)
     survey = models.ForeignKey('surveys.Survey', related_name='users',
                                on_delete=models.CASCADE, null=True, blank=True)
-    txid = models.UUIDField(_('Transaction ID'), null=True, blank=True)
+    txid = models.CharField(_('Transaction ID'), max_length=64,
+                            null=True, blank=True)
 
     class Meta:
         unique_together = ('user', 'survey')
