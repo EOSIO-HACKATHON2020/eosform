@@ -56,9 +56,12 @@ class ResetPasswordForm(forms.Form):
 
 
 class FinishResetPasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
-    password_confirm = forms.CharField(widget=forms.PasswordInput,
-                                       required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': _('type your password')
+    }), required=True)
+    password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': _('repeat your password')
+    }), required=True)
 
     def clean(self):
         data = super().clean()
