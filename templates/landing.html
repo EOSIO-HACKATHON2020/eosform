@@ -12,23 +12,30 @@
 <div class="home-content container">
     <div class="home-text">
 
-        <!-- <div class="hs-service">
-            {% trans "EOS forms is a free service for creating surveys and collecting responses" %}
-        </div> -->
-
-        <!-- <div class="hs-description">
-            {% trans "We are help to securely collect and store data in EOS blockchain during COVID-19 pandemic" %}
-        </div> -->
-
         <div class="hs-description">
             {% trans "FREE DAPP FOR CREATING SURVEYS AND COLLECTING RESPONSES ON EOS BLOCKCHAIN DURING COVID-19 PANDEMIC" %}
         </div>
 
         <a class="btn" href="{% url "users:signup" %}">{% trans "Sign up" %}</a>
-    </div>
-    <div>
-        {% trans "forms:" %} {{ eos.forms }}
-        {% trans "responses:" %} {{ eos.responses }}
+
+        <div class="hs-counters container">
+            <div class="item">
+                <div class="form-icon">
+                    <img src="../static/images/survey.png" width=100 height=100>
+                </div>
+                <div class="form-counter">
+                    {% trans "Total forms" %} {{ eos.forms }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="response-icon">
+                    <img src="../static/images/respose.png" width=100 height=100>
+                </div>
+                <div class="response-counter">
+                    {% trans "Total responses" %} {{ eos.responses }}
+                </div>
+            </div>
     </div>
 </div>
 {% endblock %}
