@@ -16,7 +16,8 @@
             {% endif %}
             {% csrf_token %}
             {{ formset.management_form }}
-            <input type="text" name="{{ form.name.html_name }}" placeholder="{{ form.name.placeholder }}" value="{{ form.name.value|default_if_none:"" }}">
+            {{ form.name.label_tag }}
+            <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.auto_id }}" placeholder="{{ form.name.placeholder }}" value="{{ form.name.value|default_if_none:"" }}">
             {% if formset.non_form_errors %}
                 {{ formset.non_form_errors }}
             {% endif %}
@@ -89,9 +90,11 @@
                     // delete button
                     createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
                 ]
-                let divElement = document.createElement('div')
+                // TODO remove or update
+                // let divElement = document.createElement('div')
                 fields.forEach((field) => {
-                    divElement.appendChild(field)
+                    // divElement.appendChild(field)
+                    q.element.append(field)
                 })
                 q.counter += 1;
                 q.forms.total += 1;
