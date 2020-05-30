@@ -120,6 +120,9 @@ class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
         self.survey = None
 
     def test_func(self) -> bool:
+        if self.request.user.is_anonymous:
+            return False
+
         has_participated = Participation.objects.filter(
             user=self.request.user, survey=self.survey).exists()
 
