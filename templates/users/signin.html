@@ -21,7 +21,7 @@
                 {% csrf_token %}
 
             <div class="control-group">
-                <input type="text" name="{{ form.username.html_name }}" class="login-field" value="{{ form.username.value|default_if_none:"" }}" placeholder="{{ form.username.placeholder|default_if_none:"" }}" id="login-name">
+                <input type="text" name="{{ form.username.html_name }}" class="login-field" value="{{ form.username.value|default_if_none:"" }}" placeholder="{% trans "your email here..." %}" id="login-name">
                 <label class="login-field-icon fui-user" for="login-name"></label>
             </div>
 
