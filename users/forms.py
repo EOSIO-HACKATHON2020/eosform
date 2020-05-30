@@ -4,9 +4,12 @@ from .models import User
 
 
 class SignupForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
-    password = forms.CharField(widget=forms.PasswordInput, required=True,
-                               label=_('Password'))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+        'placeholder': _('your email here')
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': _('password')
+    }), required=True, label=_('Password'))
     has_accepted_terms = forms.BooleanField(
         label=_('Accept terms of service and privacy policy'))
 
@@ -46,13 +49,19 @@ class SignupForm(forms.ModelForm):
 
 
 class ResetPasswordForm(forms.Form):
-    email = forms.EmailField(label=_('Email'), required=True)
+    email = forms.EmailField(label=_('Email'), required=True,
+                             widget=forms.EmailInput(attrs={
+                                 'placeholder': _('your email here')
+                             }))
 
 
 class FinishResetPasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
-    password_confirm = forms.CharField(widget=forms.PasswordInput,
-                                       required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': _('type your password')
+    }), required=True)
+    password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': _('repeat your password')
+    }), required=True)
 
     def clean(self):
         data = super().clean()
