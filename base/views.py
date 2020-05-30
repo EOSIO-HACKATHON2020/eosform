@@ -3,14 +3,21 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.views.generic import TemplateView
 from eos import EOS
+from surveys.models import Survey
+from surveys.models import SurveyStatus
 
 
 class LandingView(TemplateView):
     template_name = 'landing.html'
 
+    def get_surveys(self):
+        return Survey.objects.filter(status=SurveyStatus.PUBLISHED.value)\
+                   .order_by('-modified', '-created')[:20]
+
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'eos': EOS()
+            'eos': EOS(),
+            'surveys': self.get_surveys()
         })
         return super().get_context_data(**kwargs)
 

@@ -83,7 +83,9 @@ class ResponseForm(forms.Form):
             user=self._user,
             survey=self._survey
         )
-        participation.save()
-
         r = requests.post(uri, json=payload)
+        data = r.content.decode()
+        if r.status_code == 200:
+            participation.txid = data
+        participation.save()
         return r.content.decode()
