@@ -9,11 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from .otp import OTP
 from .models import User
 from .forms import SignupForm
 from . import forms
 from surveys.models import Survey
+from surveys.models import SurveyStatus
 
 
 logger = logging.getLogger(__name__)
@@ -59,12 +61,26 @@ class SigninView(LoginView):
         return super().get_context_data(**kwargs)
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     template_name = 'users/dashboard.html'
+
+    @staticmethod
+    def get_anonymous_surveys():
+        return Survey.objects.filter(Q(status=SurveyStatus.PUBLISHED.value))
+
+    def get_authenticated_surveys(self):
+        return Survey.objects.filter(
+            Q(user=self.request.user) |
+            Q(status=SurveyStatus.PUBLISHED.value))
+
+    def get_surveys(self):
+        if self.request.user.is_authenticated:
+            return self.get_authenticated_surveys()
+        return self.get_anonymous_surveys()
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'surveys': Survey.objects.filter(user=self.request.user)
+            'surveys': self.get_surveys()
         })
         return super().get_context_data(**kwargs)
 

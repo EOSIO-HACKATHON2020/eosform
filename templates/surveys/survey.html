@@ -13,7 +13,10 @@
             <span>{% trans "Response URL to share:" %}</span>
             <a href="{{ survey.get_response_url }}">{{ survey.get_response_url }}</a>
         </div>
-        <a href="{{ survey.get_delete_url }}">{% trans "Delete" %}</a>
+
+        {% if survey.user == request.user %}
+            <a href="{{ survey.get_delete_url }}">{% trans "Delete" %}</a>
+        {% endif %}
     {% endif %}
     <ul>
     {% for question in survey.questions.all %}
