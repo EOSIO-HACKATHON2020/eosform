@@ -9,7 +9,9 @@ from .models import Question
 
 
 class SurveyForm(forms.ModelForm):
-    name = forms.CharField(label=_('Name'), required=True)
+    name = forms.CharField(label=_('Name'), widget=forms.TextInput(attrs={
+        'placeholder': _('name')
+    }), required=True)
 
     class Meta:
         model = Survey
@@ -63,6 +65,8 @@ class ResponseForm(forms.Form):
             field_name = f'field_{question.id}'
             self.fields[field_name] = forms.CharField(
                 label=question.name, required=True,
+                widget=forms.TextInput(attrs={
+                    'placeholder': question.name}),
                 help_text=question.description)
 
     def send_to_eos(self):
