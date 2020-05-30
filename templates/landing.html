@@ -1,14 +1,34 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
 {% load i18n %}
+{% load static %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "styles/landing.css" %}">
+{% endblock %}
 
 {% block content %}
-    <!-- <div class="row" style="margin-top: 24px;">
-        <div class="col">
-            <div class="jumbotron">
-                <h1 class="display-4">EOSforms</h1>
-                <p class="lead">{% trans "Here you can create surveys and collect responses in EOS blockchain" %}</p>
-            </div>
+<div class="home-content container">
+    <div class="home-text">
+
+        <!-- <div class="hs-service">
+            {% trans "EOS forms is a free service for creating surveys and collecting responses" %}
+        </div> -->
+
+        <!-- <div class="hs-description">
+            {% trans "We are help to securely collect and store data in EOS blockchain during COVID-19 pandemic" %}
+        </div> -->
+
+        <div class="hs-description">
+            {% trans "FREE DAPP FOR CREATING SURVEYS AND COLLECTING RESPONSES ON EOS BLOCKCHAIN DURING COVID-19 PANDEMIC" %}
         </div>
-    </div> -->
+
+        <a class="btn" href="{% url "users:signup" %}">{% trans "Sign up" %}</a>
+    </div>
+    <div>
+        {% trans "forms:" %} {{ eos.forms }}
+        {% trans "responses:" %} {{ eos.responses }}
+    </div>
+</div>
 {% endblock %}

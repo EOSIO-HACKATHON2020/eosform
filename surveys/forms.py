@@ -6,6 +6,7 @@ from django.forms import modelformset_factory
 from config.models import Settings
 from .models import Survey
 from .models import Question
+from .models import Participation
 
 
 class SurveyForm(forms.ModelForm):
@@ -57,8 +58,9 @@ QuestionFormSet = modelformset_factory(
 
 class ResponseForm(forms.Form):
 
-    def __init__(self, survey, *args, **kwargs):
+    def __init__(self, user, survey, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._user = user
         self._survey = survey
 
         for question in self._survey.questions.all():
@@ -76,5 +78,12 @@ class ResponseForm(forms.Form):
             'form': self._survey.uid,
             'answers': list(self.cleaned_data.values())
         }
+
+        participation = Participation(
+            user=self._user,
+            survey=self._survey
+        )
+        participation.save()
+
         r = requests.post(uri, json=payload)
         return r.content.decode()
