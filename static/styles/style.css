@@ -130,3 +130,13 @@ nav{
     list-style: none;
     font-family: sans-serif;
 }
+
+.help-text {
+    font-size: 0.9rem;
+    width: 250px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px !important;
+    color: #444444;
+}
