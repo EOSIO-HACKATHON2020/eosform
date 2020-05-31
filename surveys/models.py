@@ -1,3 +1,4 @@
+import json
 import enum
 import requests
 from django.contrib.postgres.fields import ArrayField
@@ -44,14 +45,30 @@ class Survey(TimeStampedModel):
             return self.name
         return f'{self.uid}'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('surveys:survey', args=(self.uid,))
 
-    def get_publish_url(self):
+    def get_publish_url(self) -> str:
         return reverse('surveys:action', args=(self.uid, 'publish'))
 
-    def get_delete_url(self):
+    def get_delete_url(self) -> str:
         return reverse('surveys:action', args=(self.uid, 'delete'))
+
+    def get_responses_curl(self) -> str:
+        """
+        cURL link to retrieve data in JSON format
+        :return: string
+        """
+        settings = Settings.get_solo()
+        endpoint = f'{settings.eos_node_uri}/v1/chain/get_table_rows'
+        data = json.dumps({
+            'code': settings.eos_account,
+            'table': 'response',
+            'scope': self.uid,
+            'limit': 10000,
+            'json': True
+        })
+        return f'cURL --request "POST" --url {endpoint} --data \'{data}\''
 
     def get_response_url(self):
         settings = Settings.get_solo()
