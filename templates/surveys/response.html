@@ -14,7 +14,13 @@
         <form method="post">
             {% csrf_token %}
             {% if form.errors %}
-                {{ form.errors }}
+                <div class="notification">
+                    {% for field, error in form.errors.items  %}
+                        <div class="label">
+                            {{ error.as_text }}
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
             {% for field in form %}
                 <div>
