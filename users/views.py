@@ -143,7 +143,7 @@ class ConfirmSignupView(View):
             logger.info(f'user {user} confirmed email')
             messages.info(request, _(f'Congratulations! You have successfully '
                                      f'confirmed your email'))
-        return HttpResponseRedirect(reverse('users:signin'))
+        return HttpResponseRedirect(reverse('users:dashboard'))
 
     def get_user(self) -> User:
         user_id = self.kwargs.get('pk')
