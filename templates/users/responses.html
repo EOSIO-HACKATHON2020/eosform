@@ -10,14 +10,37 @@
 
 {% block content %}
     <div class="dashboard-screen">
-        <div class="dashboard-title">
-            <label for="id_s-name">{% trans "Survey" %}</label>
-            <label for="id_s-name">{% trans "Responses" %}</label>
-            <label for="id_s-name">{% trans "EOS link" %}</label>
-        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <div for="id_s-name">{% trans "Survey" %}</div>
+                </th>
+                <th class="fixed-100">
 
-        {% for survey in surveys %}
-            {% include "includes/survey.html" with survey=survey %}
-        {% endfor %}
+                    <div for="id_s-name">{% trans "Responses" %}</div>
+                </th>
+                <th>
+
+                    <div for="id_s-name">{% trans "EOS link" %}</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for survey in surveys %}
+                <tr>
+                    <td>
+                        <a href="{{ survey.get_absolute_url }}">{{ survey.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ survey.get_response_url }}" target="_blank">{% trans "Add" %}</a>
+                    </td>
+                    <td>
+                        <a href="{{ survey.get_json_url }}" target="_blank">{{ survey.uid }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
