@@ -41,14 +41,14 @@
                     uri: "https://api.testnet.eos.io",
                     // TODO in case we change smart contract this must be changed as well
                     contract: "asbizxenfaac",
-                    getTableByScope: "/v1/chain/get_table_by_scope",
+                    endpoint: "/v1/chain/get_table_rows",
                     scope: "{{ survey.uid }}",
                 }
             }
 
-            function rows(scope) {
+            function rows() {
                 let request = new XMLHttpRequest();
-                request.open("POST", `${config.api.uri}${config.api.getTableByScope}`, true);
+                request.open("POST", `${config.api.uri}${config.api.endpoint}`, true);
                 request.setRequestHeader('Content-Type', 'application/json');
                 request.send(JSON.stringify({
                     code: config.api.contract,
