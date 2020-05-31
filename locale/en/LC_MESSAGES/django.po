@@ -1,0 +1,443 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-31 18:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/models.py:8
+msgid "Site Domain"
+msgstr ""
+
+#: config/models.py:9
+msgid "e.g. https://beta.eosform.app"
+msgstr ""
+
+#: config/models.py:10
+msgid "EOSGate URI"
+msgstr ""
+
+#: config/models.py:11
+msgid "e.g. http://localhost:8080"
+msgstr ""
+
+#: config/models.py:12
+msgid "EOS Account"
+msgstr ""
+
+#: config/models.py:15
+msgid "EOS Node URI"
+msgstr ""
+
+#: config/models.py:16
+msgid "e.g. https://api.testnet.eos.io"
+msgstr ""
+
+#: config/models.py:19 config/models.py:22
+msgid "Settings"
+msgstr ""
+
+#: surveys/admin.py:97
+msgid "Survey UID"
+msgstr ""
+
+#: surveys/forms.py:13 surveys/models.py:32 surveys/models.py:165
+#: templates/surveys/create.html:21
+msgid "Name"
+msgstr ""
+
+#: surveys/forms.py:14
+msgid "name"
+msgstr ""
+
+#: surveys/forms.py:43
+msgid "At least one question is required"
+msgstr ""
+
+#: surveys/models.py:30
+msgid "User"
+msgstr ""
+
+#: surveys/models.py:31
+msgid "Survey owner"
+msgstr ""
+
+#: surveys/models.py:37
+msgid "UID will be used during EOS upload"
+msgstr ""
+
+#: surveys/models.py:39
+msgid "Status"
+msgstr ""
+
+#: surveys/models.py:164 templates/surveys/create.html:92
+msgid "Question"
+msgstr ""
+
+#: surveys/models.py:166 templates/surveys/create.html:104
+msgid "Description"
+msgstr ""
+
+#: surveys/models.py:167
+msgid "question's help text"
+msgstr ""
+
+#: surveys/models.py:169
+msgid "Question Type"
+msgstr ""
+
+#: surveys/models.py:173
+msgid "Is required?"
+msgstr ""
+
+#: surveys/models.py:174
+msgid "Question must be answered in order to submit response"
+msgstr ""
+
+#: surveys/models.py:192
+msgid "Transaction ID"
+msgstr ""
+
+#: surveys/views.py:54
+#, python-brace-format
+msgid "Survey {survey.uid} created successfully"
+msgstr ""
+
+#: surveys/views.py:130
+msgid "You must verify your email first"
+msgstr ""
+
+#: surveys/views.py:138
+msgid "You have already participated in this survey"
+msgstr ""
+
+#: surveys/views.py:171
+#, python-brace-format
+msgid "Response submitted: {message}"
+msgstr ""
+
+#: templates/base.html:20
+msgid "EOS Forms"
+msgstr ""
+
+#: templates/base.html:25
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:28
+msgid "Dashboard"
+msgstr ""
+
+#: templates/base.html:32 templates/surveys/create.html:31
+msgid "Create Survey"
+msgstr ""
+
+#: templates/base.html:35
+msgid "Response"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Sign out"
+msgstr ""
+
+#: templates/base.html:42 templates/landing.html:19
+#: templates/users/signup.html:16
+msgid "Sign up"
+msgstr ""
+
+#: templates/base.html:45 templates/users/signin.html:16
+msgid "Sign in"
+msgstr ""
+
+#: templates/includes/survey.html:5
+msgid "Add"
+msgstr ""
+
+#: templates/landing.html:16
+msgid ""
+"FREE DAPP FOR CREATING SURVEYS AND COLLECTING RESPONSES ON EOS BLOCKCHAIN "
+"DURING COVID-19 PANDEMIC"
+msgstr ""
+
+#: templates/landing.html:27
+msgid "Total surveys"
+msgstr ""
+
+#: templates/landing.html:36
+msgid "Total responses"
+msgstr ""
+
+#: templates/surveys/create.html:20
+msgid "Survey:"
+msgstr ""
+
+#: templates/surveys/create.html:32
+msgid "+"
+msgstr ""
+
+#: templates/surveys/json.html:9 templates/surveys/survey.html:22
+msgid ""
+"\n"
+"            cURL example how to extract responses via EOS testnet API. Just "
+"copy-paste it into your terminal under\n"
+"            macOS or Linux\n"
+"        "
+msgstr ""
+
+#: templates/surveys/response.html:13
+msgid "Submit"
+msgstr ""
+
+#: templates/surveys/survey.html:9
+msgid "Publish"
+msgstr ""
+
+#: templates/surveys/survey.html:13
+msgid "Response URL to share:"
+msgstr ""
+
+#: templates/surveys/survey.html:18
+msgid "Delete"
+msgstr ""
+
+#: templates/users/dashboard.html:14 templates/users/responses.html:14
+msgid "Survey"
+msgstr ""
+
+#: templates/users/dashboard.html:15 templates/users/responses.html:15
+msgid "Responses"
+msgstr ""
+
+#: templates/users/dashboard.html:16 templates/users/responses.html:16
+msgid "EOS link"
+msgstr ""
+
+#: templates/users/emails/confirm_signup.html:3
+#, python-format
+msgid ""
+"\n"
+"    <div>\n"
+"        Hi!\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"    <div>\n"
+"        Thank you for signup on <a href=\"%(domain)s\">%(domain)s</a>.\n"
+"        Please confirm this is your email by clicking:\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"    <div>\n"
+"        <a href=\"%(link)s\">confirm email</a>\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"<div>\n"
+"    best regards,<br>\n"
+"    your eosform team\n"
+"</div>\n"
+msgstr ""
+
+#: templates/users/emails/confirm_signup.txt:3
+#, python-format
+msgid ""
+"\n"
+"Hi!\n"
+"\n"
+"Thank you for signup on %(domain)s. Please confirm this is your email by "
+"clicking:\n"
+"\n"
+"%(link)s\n"
+"\n"
+"best regards,\n"
+"your eosform team\n"
+msgstr ""
+
+#: templates/users/emails/reset_password.html:3
+#, python-format
+msgid ""
+"\n"
+"    <div>\n"
+"        Hi!\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"    <div>\n"
+"        In order to reset password please click on the link below:\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"    <div>\n"
+"        <a href=\"%(link)s\">reset password</a>\n"
+"    </div>\n"
+"    <br>\n"
+"\n"
+"    <div>\n"
+"        best regards,<br>\n"
+"        %(domain)s team\n"
+"    </div>\n"
+msgstr ""
+
+#: templates/users/emails/reset_password.txt:3
+#, python-format
+msgid ""
+"\n"
+"Hi!\n"
+"\n"
+"In order to reset password please click on the link below:\n"
+"\n"
+"%(link)s\n"
+"\n"
+"best regards,\n"
+"%(domain)s team\n"
+msgstr ""
+
+#: templates/users/finish_reset_password.html:16
+msgid "Finish reset password"
+msgstr ""
+
+#: templates/users/finish_reset_password.html:23
+#: templates/users/finish_reset_password.html:27 templates/users/signin.html:29
+#: templates/users/signup.html:26 users/forms.py:11
+msgid "password"
+msgstr ""
+
+#: templates/users/finish_reset_password.html:29
+msgid "confirm reset"
+msgstr ""
+
+#: templates/users/reset_password.html:16
+msgid "Reset password"
+msgstr ""
+
+#: templates/users/reset_password.html:23
+msgid "type your email here"
+msgstr ""
+
+#: templates/users/reset_password.html:26
+msgid "reset password"
+msgstr ""
+
+#: templates/users/signin.html:24 templates/users/signup.html:21
+msgid "your email here..."
+msgstr ""
+
+#: templates/users/signin.html:33
+msgid "sign in"
+msgstr ""
+
+#: templates/users/signin.html:34
+msgid "Lost your password?"
+msgstr ""
+
+#: templates/users/signup.html:30
+msgid "sign up"
+msgstr ""
+
+#: users/admin.py:14
+msgid "Personal info"
+msgstr ""
+
+#: users/admin.py:20
+msgid "Permissions"
+msgstr ""
+
+#: users/admin.py:25
+msgid "Important dates"
+msgstr ""
+
+#: users/forms.py:8 users/forms.py:54
+msgid "your email here"
+msgstr ""
+
+#: users/forms.py:12
+msgid "Password"
+msgstr ""
+
+#: users/forms.py:14
+msgid "Accept terms of service and privacy policy"
+msgstr ""
+
+#: users/forms.py:27
+msgid ""
+"In order to signup you must accept our terms of service and privacy policy"
+msgstr ""
+
+#: users/forms.py:52 users/models.py:53
+msgid "Email"
+msgstr ""
+
+#: users/forms.py:60
+msgid "type your password"
+msgstr ""
+
+#: users/forms.py:63
+msgid "repeat your password"
+msgstr ""
+
+#: users/forms.py:70
+msgid "Password do not match"
+msgstr ""
+
+#: users/models.py:59
+msgid "Required. 254 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: users/models.py:64
+msgid ""
+"Enter a valid username. This value may contain only letters, numbers and @/./"
+"+/-/_ characters."
+msgstr ""
+
+#: users/models.py:69
+msgid "First name"
+msgstr ""
+
+#: users/models.py:71
+msgid "Last name"
+msgstr ""
+
+#: users/models.py:75
+msgid "Staff status"
+msgstr ""
+
+#: users/models.py:77
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: users/models.py:82
+msgid "Active"
+msgstr ""
+
+#: users/models.py:87
+msgid "Is Email Verified?"
+msgstr ""
+
+#: users/models.py:144
+msgid "[eosform] Confirm signup"
+msgstr ""
+
+#: users/models.py:165
+msgid "[eosform] Reset password"
+msgstr ""
+
+#: users/models.py:177
+msgid "Email cannot be blank."
+msgstr ""
+
+#: users/models.py:179
+msgid "Email can not be empty."
+msgstr ""
