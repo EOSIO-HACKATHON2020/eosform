@@ -1,6 +1,11 @@
 .response-screen {
-    width:100%;
+    width:500px;
     font-family: 'Poppins', sans-serif;
     text-align: center;
     margin: 20px auto;
+    display:flex;
+}
+
+.response-screen p{
+    flex:auto;
 }
