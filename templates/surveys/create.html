@@ -91,9 +91,26 @@
                     {#createField({tag: "input", type: "checkbox", name: "is_required", }),#}
                 ]
                 let divElement = document.createElement('div')
-                fields.forEach((field) => {
-                    divElement.appendChild(field)
+
+                let questionGroup = document.createElement('div')
+                let nameInput = createField({
+                    tag: "input", name: "name", placeholder: "{% trans "Question" %}", required: true
                 })
+                let deleteInput = createField({
+                    tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"
+                })
+                questionGroup.appendChild(nameInput)
+                questionGroup.appendChild(deleteInput)
+
+                let descriptionGroup = document.createElement('div')
+                let descriptionInput = createField({
+                    tag: "input", name: "description", placeholder: "{% trans "Description" %}"
+                })
+                descriptionGroup.appendChild(descriptionInput)
+
+                divElement.appendChild(questionGroup)
+                divElement.appendChild(descriptionGroup)
+
                 q.counter += 1;
                 q.forms.total += 1;
                 return divElement
@@ -106,7 +123,7 @@
                     btn.onclick = function(e) {
                         q.forms.total -= 1;
                         q.forms.input.value = q.forms.total;
-                        e.target.parentElement.remove();
+                        e.target.parentElement.parentElement.remove();
                     }
                 })
             }
