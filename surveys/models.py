@@ -75,6 +75,9 @@ class Survey(TimeStampedModel):
         return f'{settings.domain}' \
                f'{reverse("surveys:response", args=(self.uid,))}'
 
+    def get_json_url(self):
+        return f'{reverse("surveys:json", args=(self.uid,))}'
+
     def get_origin(self):
         if self.id:
             return Survey.objects.filter(id=self.id).first()

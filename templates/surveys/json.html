@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <h3>{{ survey.name }}</h3>
+    <h3>{{ survey.uid }}</h3>
+    <div>
+        {% blocktrans %}
+            cURL example how to extract responses via EOS testnet API. Just copy-paste it into your terminal under
+            macOS or Linux
+        {% endblocktrans %}
+    </div>
+    <div>
+        <code>
+            {{ survey.get_responses_curl }}
+        </code>
+    </div>
+    <div>
+        <code id="json"></code>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        (function() {
+            let config = {
+                api: {
+                    uri: "https://api.testnet.eos.io",
+                    // TODO in case we change smart contract this must be changed as well
+                    contract: "asbizxenfaac",
+                    endpoint: "/v1/chain/get_table_rows",
+                    scope: "{{ survey.uid }}",
+                },
+                el: document.querySelector("#json")
+            }
+
+            function rows() {
+                fetch(`${config.api.uri}${config.api.endpoint}`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        code: config.api.contract,
+                        table: "response",
+                        scope: config.api.scope,
+                        // TODO for production usage this can be handled with chunks and pagination
+                        limit: 10000,
+                        json: true
+                    })
+                }).then(response => response.json()).then(data => {
+                    config.el.innerHTML = JSON.stringify(data)
+                });
+            }
+            rows()
+        })()
+    </script>
+{% endblock %}
