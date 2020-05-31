@@ -12,13 +12,8 @@
     font-size: 16px;
     font-weight: 200;
     padding: 10px 0;
-    width: 40%;
     transition: border .5s;
     margin-bottom: 10px;
-}
-
-.questions {
-    width:100%;
 }
 
 .base {
@@ -124,4 +119,16 @@
 
 .inc-btn:hover {
     background-color: #2980B9;
+}
+
+@media screen and (max-width:1024px){
+    .create-form{
+        width:60%;
+    }
+}
+
+@media screen and (max-width:768px){
+    .create-form{
+        width:80%;
+    }
 }
