@@ -1,6 +1,5 @@
 import logging
 from typing import Union
-from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.views.generic import View

@@ -2,9 +2,12 @@ import logging
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic import View
 from django.contrib.auth import logout
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
@@ -16,7 +19,6 @@ from .forms import SignupForm
 from . import forms
 from surveys.models import Survey
 from surveys.models import SurveyStatus
-from surveys.models import Participation
 
 
 logger = logging.getLogger(__name__)
@@ -43,8 +45,9 @@ class SignupView(TemplateView):
         if form.is_valid():
             user = form.save()
             user.request_confirm_email()
-            # TODO add message about success
             logger.info(f'User {user.id} "{user.email}" signed up')
+            messages.info(request, _(f'You have successfully signed up. '
+                                     f'Check your mailbox to confirm email'))
             return HttpResponseRedirect(reverse('users:dashboard'))
 
         ctx = self.get_context_data(**kwargs)
@@ -136,8 +139,10 @@ class ConfirmSignupView(View):
         else:
             user.is_email_verified = True
             user.save()
-            # TODO logger
-            # TODO message
+            login(request, user)
+            logger.info(f'user {user} confirmed email')
+            messages.info(request, _(f'Congratulations! You have successfully '
+                                     f'confirmed your email'))
         return HttpResponseRedirect(reverse('users:signin'))
 
     def get_user(self) -> User:
@@ -176,8 +181,8 @@ class FinishResetPasswordView(TemplateView):
             user = self.get_user()
             user.set_password(form.cleaned_data['password'])
             user.save()
-            # TODO logger password changed
-            # TODO message
+            logger.info(f'user {user} finished password reset')
+            messages.info(request, _(f'You have reset password!'))
             return HttpResponseRedirect(reverse('users:dashboard'))
         ctx = self.get_context_data(**kwargs)
         ctx['form'] = form
@@ -204,9 +209,10 @@ class ResetPasswordView(TemplateView):
             user = User.objects.filter(email=email).first()
             if user:
                 user.reset_password()
-                # TODO logger
                 logger.info('password reset initiated')
-                # TODO message
+                messages.info(request, _(f'If such email exists we will '
+                                         f'send email with the link to reset '
+                                         f'password'))
             return HttpResponseRedirect(reverse('users:signin'))
         ctx = self.get_context_data(**kwargs)
         ctx['form'] = form
