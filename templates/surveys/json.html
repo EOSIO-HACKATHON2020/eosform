@@ -1,24 +1,35 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "styles/survey.css" %}">
+{% endblock %}
 
 {% block content %}
-    <h3>{{ survey.name }}</h3>
-    <h3>{{ survey.uid }}</h3>
+<section class="container">
+    <h1>{{ survey.name }}</h1>
+    <div>
+        <a href="{{ survey.get_json_url }}">{{ survey.uid }}</a><code></code>
+    </div>
     <div>
         {% blocktrans %}
             cURL example how to extract responses via EOS testnet API. Just copy-paste it into your terminal under
             macOS or Linux
         {% endblocktrans %}
     </div>
-    <div>
+    <div class="code-wrapper">
         <code>
-            {{ survey.get_responses_curl }}
+            {{ survey.get_responses_curl|linebreaks }}
         </code>
     </div>
-    <div>
+    <h3>{% trans "Response from EOS Node API" %}</h3>
+    <div class="code-wrapper">
         <code id="json"></code>
     </div>
+</section>
 {% endblock %}
 
 {% block js %}
