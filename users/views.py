@@ -46,6 +46,7 @@ class SignupView(TemplateView):
             # TODO add message about success
             logger.info(f'User {user.id} "{user.email}" signed up')
             return HttpResponseRedirect(reverse('users:dashboard'))
+
         ctx = self.get_context_data(**kwargs)
         ctx['form'] = form
         return self.render_to_response(ctx)
