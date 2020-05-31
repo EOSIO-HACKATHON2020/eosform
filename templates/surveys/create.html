@@ -78,31 +78,21 @@
             // Create form
             function addQuestionsForm() {
 
-                let fields = [
-                    // name
-                    createField({tag: "input", name: "name", placeholder: "{% trans "Question" %}", required: true}),
-                    // delete button
-                    createField({tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"}),
-                    // description
-                    createField({tag: "input", name: "description", placeholder: "{% trans "Description" %}"}),
-                    {#// type#}
-                    {#createField({tag: "select", name: "type", options: []}),#}
-                    {#// isRequired#}
-                    {#createField({tag: "input", type: "checkbox", name: "is_required", }),#}
-                ]
                 let divElement = document.createElement('div')
 
                 let questionGroup = document.createElement('div')
+                questionGroup.classList.add("base")
                 let nameInput = createField({
                     tag: "input", name: "name", placeholder: "{% trans "Question" %}", required: true
                 })
                 let deleteInput = createField({
-                    tag: "input", type: "button", name: "delete", value: "{% trans "-" %}"
+                    tag: "button", type: "button", name: "delete", value: "{% trans "-" %}"
                 })
                 questionGroup.appendChild(nameInput)
                 questionGroup.appendChild(deleteInput)
 
                 let descriptionGroup = document.createElement('div')
+                descriptionGroup.classList.add("optional")
                 let descriptionInput = createField({
                     tag: "input", name: "description", placeholder: "{% trans "Description" %}"
                 })
