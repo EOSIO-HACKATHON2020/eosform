@@ -27,7 +27,7 @@
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="survey-data">
             </tbody>
         </table>
     </div>
@@ -43,7 +43,8 @@
                     contract: "asbizxenfaac",
                     endpoint: "/v1/chain/get_table_rows",
                     scope: "{{ survey.uid }}",
-                }
+                },
+                tbody: document.querySelector("#survey-data")
             }
 
             function rows() {
@@ -57,7 +58,15 @@
                         json: true
                     })
                 }).then(response => response.json()).then(data => {
-                    console.log(data)
+                    data.forEach(item => {
+                        let tr = document.createElement("tr")
+                        item.answers.forEach(answer => {
+                            let td = document.createElement("td")
+                            td.innerHTML += answer
+                            tr.appendChild(td)
+                        })
+                        config.tbody.appendChild(tr)
+                    })
                 });
             }
             rows()
