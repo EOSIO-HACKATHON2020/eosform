@@ -43,3 +43,15 @@
         margin: 0px 0px; 
     }
 }
+
+a {
+    color: #3498DB;
+}
+
+thead, tbody td {
+    text-align: left;
+}
+
+.fixed-100 {
+    width: 100px;
+}
