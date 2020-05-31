@@ -24,7 +24,7 @@
         </div>
 
         {% if survey.user == request.user %}
-            <a href="{{ survey.get_delete_url }}">{% trans "Delete" %}</a>
+            <a href="{{ survey.get_delete_url }}" class="red">{% trans "Delete" %}</a>
         {% endif %}
     {% endif %}
     <div>
