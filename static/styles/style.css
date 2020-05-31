@@ -140,3 +140,9 @@ nav{
     margin-top: 5px !important;
     color: #444444;
 }
+
+.base-page {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1.1rem;
+}

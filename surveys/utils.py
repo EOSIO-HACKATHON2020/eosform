@@ -7,4 +7,4 @@ def gen_eos_username() -> str:
 
 
 def eos_testnet_tx(txid):
-    return f''
+    return f'https://testnet.eos.io/transaction/{txid}'
