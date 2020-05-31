@@ -58,7 +58,7 @@
                         json: true
                     })
                 }).then(response => response.json()).then(data => {
-                    config.el.innerHTML = JSON.stringify(data)
+                    config.el.innerHTML = JSON.stringify(data, null, 2)
                 });
             }
             rows()
