@@ -16,6 +16,7 @@ from .forms import SignupForm
 from . import forms
 from surveys.models import Survey
 from surveys.models import SurveyStatus
+from surveys.models import Participation
 
 
 logger = logging.getLogger(__name__)
@@ -72,6 +73,33 @@ class DashboardView(TemplateView):
         return Survey.objects.filter(
             Q(user=self.request.user) |
             Q(status=SurveyStatus.PUBLISHED.value))
+
+    def get_surveys(self):
+        if self.request.user.is_authenticated:
+            return self.get_authenticated_surveys()
+        return self.get_anonymous_surveys()
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'surveys': self.get_surveys()
+        })
+        return super().get_context_data(**kwargs)
+
+
+class ResponsesView(TemplateView):
+    template_name = 'users/responses.html'
+
+    @staticmethod
+    def get_anonymous_surveys():
+        return Survey.objects.filter(Q(status=SurveyStatus.PUBLISHED.value))
+
+    def get_authenticated_surveys(self):
+        pks = self.request.user.surveys_participated\
+            .values_list('id', flat=True)
+        return Survey.objects.filter(
+            Q(user=self.request.user) |
+            Q(status=SurveyStatus.PUBLISHED.value)
+        ).exclude(pk__in=pks)
 
     def get_surveys(self):
         if self.request.user.is_authenticated:

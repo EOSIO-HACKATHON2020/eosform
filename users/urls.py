@@ -17,4 +17,5 @@ urlpatterns = [
          views.ConfirmSignupView.as_view(), name='confirm-signup'),
 
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
+    path('responses/', views.ResponsesView.as_view(), name='responses'),
 ]

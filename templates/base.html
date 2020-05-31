@@ -29,10 +29,10 @@
             </li>
             {% if request.user.is_authenticated %}
             <li>
-                <a href="{% url "surveys:create" %}">{% trans "Survey" %}</a>
+                <a href="{% url "surveys:create" %}">{% trans "Create Survey" %}</a>
             </li>
             <li>
-                <a href="">{% trans "Response" %}</a>
+                <a href="{% url "users:responses" %}">{% trans "Response" %}</a>
             </li>
             <li>
                 <a href="{% url "users:signout" %}">{% trans "Sign out" %}</a>
