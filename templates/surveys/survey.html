@@ -58,8 +58,7 @@
                         json: true
                     })
                 }).then(response => response.json()).then(data => {
-                    console.log(data)
-                    data.answers.forEach(row => {
+                    data.rows.forEach(row => {
                         let tr = document.createElement("tr")
                         row.answers.forEach(answer => {
                             console.log(answer)
