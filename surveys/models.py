@@ -68,7 +68,9 @@ class Survey(TimeStampedModel):
             'limit': 10000,
             'json': True
         })
-        return f'cURL --request "POST" --url {endpoint} --data \'{data}\''
+        return f'cURL --request "POST" \n' \
+               f'--url {endpoint} \n' \
+               f'--data \'{data}\''
 
     def get_response_url(self):
         settings = Settings.get_solo()
