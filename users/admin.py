@@ -14,6 +14,7 @@ class UserAdmin(BaseUserAdmin):
         (_('Personal info'), {'fields': (
             'first_name',
             'last_name',
+            'is_email_verified',
         )
         }),
         (_('Permissions'), {
