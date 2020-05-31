@@ -162,12 +162,17 @@ class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
         })
         return super().get_context_data(**kwargs)
 
+    def eos_tx_link(self, txid):
+        return f'https://testnet.eos.io/transaction/{txid}'
+
     def post(self, request, *args, **kwargs):
         form = self.get_form()
 
         if form.is_valid():
             message = form.send_to_eos()
-            messages.info(request, _(f'Response submitted: {message}'))
+            eos_link = self.eos_tx_link(message)
+            messages.info(request, _(f'Response submitted: '
+                                     f'<a href="{eos_link}">{message}</a>'))
             return HttpResponseRedirect(self.survey.get_absolute_url())
 
         ctx = self.get_context_data(**kwargs)
