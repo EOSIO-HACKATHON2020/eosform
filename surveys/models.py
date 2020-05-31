@@ -174,3 +174,6 @@ class Participation(TimeStampedModel):
 
     class Meta:
         unique_together = ('user', 'survey')
+
+    def get_testnet_url(self):
+        return f'https://testnet.eos.io/transaction/{self.txid}'
