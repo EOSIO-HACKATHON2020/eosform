@@ -63,7 +63,7 @@ class ResponseForm(forms.Form):
         self._user = user
         self._survey = survey
 
-        for question in self._survey.questions.all():
+        for question in self._survey.questions.all().order_by('id'):
             field_name = f'field_{question.id}'
             self.fields[field_name] = forms.CharField(
                 label=question.name, required=True,

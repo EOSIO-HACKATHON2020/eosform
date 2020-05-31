@@ -169,10 +169,7 @@ class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
         if form.is_valid():
             message = form.send_to_eos()
             messages.info(request, _(f'Response submitted: {message}'))
-            return HttpResponseRedirect(
-                f"{self.survey.get_response_url()}?"
-                f"{urlencode({'status': 'success'})}"
-            )
+            return HttpResponseRedirect(self.survey.get_absolute_url())
 
         ctx = self.get_context_data(**kwargs)
         ctx['form'] = form
