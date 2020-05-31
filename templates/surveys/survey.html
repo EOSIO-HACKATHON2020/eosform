@@ -49,15 +49,6 @@
             function rows(scope) {
                 let request = new XMLHttpRequest();
                 request.open("POST", `${config.api.uri}${config.api.getTableByScope}`, true);
-                request.send( null );
-                request.onload = function() {
-                  if (this.status >= 200 && this.status < 400) {
-                    let data = JSON.parse(this.response);
-                    console.log(data)
-                  } else {
-                      console.error(this.response)
-                  }
-                };
                 request.setRequestHeader('Content-Type', 'application/json');
                 request.send(JSON.stringify({
                     code: config.api.contract,
@@ -66,6 +57,14 @@
                     limit: 10000,
                     json: true
                 }))
+                request.onload = function() {
+                  if (this.status >= 200 && this.status < 400) {
+                    let data = JSON.parse(this.response);
+                    console.log(data)
+                  } else {
+                      console.error(this.response)
+                  }
+                };
             }
             rows()
         })()
