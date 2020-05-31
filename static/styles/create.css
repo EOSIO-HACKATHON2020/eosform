@@ -1,11 +1,73 @@
 .create-form {
     margin: 20px auto;
-    width: 300px;
+    width: 500px;
     font-family: 'Poppins', sans-serif;
     text-align: center;
 }
 
+.create-title input {
+    background-color: #ECF0F1;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 40%;
+    transition: border .5s;
+    margin-bottom: 10px;
+}
+
 .questions {
+    width:100%;
+}
+
+.base {
+    display: flex;
+}
+
+.base input{
+    background-color: #ECF0F1;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    transition: border .5s;
+    margin-bottom: 10px;
+    flex:auto;
+    margin: 0 5px; 
+    margin-bottom: 10px;
+}
+
+.base button {
+    border: 2px solid transparent;
+    background: #3498DB;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 10px 0;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 3px;
+    box-shadow: none;
+    transition: 0.25s;
+    display: block;
+    flex:auto;
+    margin: 0 5px; 
+    margin-bottom: 10px;
+}
+
+.base button:hover {
+    background-color: #2980B9;
+}
+
+.optional {
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px; 
+}
+
+.optional input {
     text-align: center;
     background-color: #ECF0F1;
     border: 2px solid transparent;
@@ -13,11 +75,11 @@
     font-size: 16px;
     font-weight: 200;
     padding: 10px 0;
-    width: 250px;
     transition: border .5s;
+    width: 100%;
 }
 
-.create-controllers {
+.create-controllers{
     display: flex;
     margin-bottom: 10px;
 }
@@ -35,17 +97,31 @@
     box-shadow: none;
     transition: 0.25s;
     display: block;
-    width: 250px;
-    margin: 0 auto;
+    width: 50%;
+    margin: 0 5px; 
 }
 
 .create-btn:hover {
     background-color: #2980B9;
-    flex: 1 1 auto;
 }
 
 .inc-btn {
-    flex: 1 1 auto;
-    width: 250px;
+    border: 2px solid transparent;
+    background: #3498DB;
+    color: #ffffff;
+    font-size: 16px;
     line-height: 25px;
+    padding: 10px 0;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 3px;
+    box-shadow: none;
+    transition: 0.25s;
+    display: block;
+    width: 50%;
+    margin: 0 5px; 
+}
+
+.inc-btn:hover {
+    background-color: #2980B9;
 }
