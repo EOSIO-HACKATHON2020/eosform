@@ -58,9 +58,11 @@
                         json: true
                     })
                 }).then(response => response.json()).then(data => {
-                    data.forEach(function(item) {
+                    console.log(data)
+                    data.answers.forEach(row => {
                         let tr = document.createElement("tr")
-                        item.answers.forEach(answer => {
+                        row.answers.forEach(answer => {
+                            console.log(answer)
                             let td = document.createElement("td")
                             td.innerHTML += answer
                             tr.appendChild(td)
