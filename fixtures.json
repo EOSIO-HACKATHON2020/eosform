@@ -1,0 +1,1 @@
+[{"model": "config.settings", "pk": 1, "fields": {"maintenance_mode": false, "domain": "https://eosform.app", "eosgate": null, "eos_account": "asbizxenfaac", "eos_node_uri": "https://api.testnet.eos.io"}}]

@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.conf import settings
 from django.views.generic import TemplateView
 from eos import EOS
 from surveys.models import Survey
