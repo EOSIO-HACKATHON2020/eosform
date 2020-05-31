@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
+from .utils import eos_testnet_tx
 from . import forms
 from .models import SurveyStatus
 from .models import Survey
@@ -98,7 +99,9 @@ class SurveyActionView(LoginRequiredMixin, View):
             raise Http404()
 
         if survey.is_draft and action == 'publish':
-            message = survey.eos_publish()
+            txid = survey.eos_publish()
+            link = eos_testnet_tx(txid)
+            message = f'<a href="{link}">{txid}</a>'
         elif survey.is_published and action == 'delete':
             message = survey.eos_delete()
             survey.delete()
@@ -167,7 +170,9 @@ class ResponseView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
 
         if form.is_valid():
             message = form.send_to_eos()
-            messages.info(request, _(f'Response submitted: {message}'))
+            eos_link = eos_testnet_tx(message)
+            messages.info(request, _(f'Response submitted: '
+                                     f'<a href="{eos_link}">{message}</a>'))
             return HttpResponseRedirect(self.survey.get_absolute_url())
 
         ctx = self.get_context_data(**kwargs)
