@@ -3,8 +3,21 @@
 {% load i18n %}
 {% load static %}
 
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}">
+{% endblock %}
+
 {% block content %}
-    {% for survey in surveys %}
-        {% include "includes/survey.html" with survey=survey %}
-    {% endfor %}
+    <div class="dashboard-screen">
+        <div class="dashboard-title">
+            <label for="id_s-name">{% trans "Survey" %}</label>
+            <label for="id_s-name">{% trans "EOS form name" %}</label>
+            <label for="id_s-name">{% trans "Responses" %}</label>
+        </div>
+
+        {% for survey in surveys %}
+            {% include "includes/survey.html" with survey=survey %}
+        {% endfor %}
+    </div>
 {% endblock %}

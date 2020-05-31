@@ -88,12 +88,13 @@
 
                 let questionGroup = document.createElement('div')
                 questionGroup.classList.add("base")
-                let nameInput = createField({
+                let nameInput = createField({   
                     tag: "input", name: "name", placeholder: "{% trans "Question" %}", required: true
                 })
                 let deleteInput = createField({
-                    tag: "button", type: "button", name: "delete", value: "{% trans "-" %}"
+                    tag: "button", type: "button", name: "delete", value: "-"
                 })
+
                 questionGroup.appendChild(nameInput)
                 questionGroup.appendChild(deleteInput)
 

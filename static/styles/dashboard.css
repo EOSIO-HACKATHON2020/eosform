@@ -1,0 +1,23 @@
+.dashboard-screen {
+    width:100%;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.dashboard-title {
+    display:flex;
+}
+
+.dashboard-title label {
+    flex:auto;
+    margin: 5px 5px; 
+    margin-bottom: 10px;
+}
+
+.row {
+    flex:auto;
+    margin: 5px 5px; 
+    margin-bottom: 10px;
+}
+
