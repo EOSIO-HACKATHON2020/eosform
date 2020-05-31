@@ -95,6 +95,7 @@ nav{
 .nav-active{
     transform: translateX(0%);
     z-index: 1;
+    height: 100%
 }
  
 @keyframes navLinkFade{
@@ -123,8 +124,7 @@ nav{
 .notification {
     background-color: lightyellow;
     max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 24px auto;
     padding: 24px;
     border: 1px solid lightgoldenrodyellow;
     list-style: none;

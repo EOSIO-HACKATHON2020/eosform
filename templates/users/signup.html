@@ -18,6 +18,15 @@
 
         <div class="login-form">
             <form action="" method="post">{% csrf_token %}
+                {% if form.errors %}
+                    <div class="notification">
+                        {% for field, error in form.errors.items  %}
+                            <div class="label">
+                                {{ error.as_text }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="control-group">
                     <input type="text" class="login-field" value="{{ form.email.value|default_if_none:"" }}" placeholder="{% trans "your email here..." %}" id="login-name" name="{{ form.email.html_name }}">
                     <label class="login-field-icon fui-user" for="login-name"></label>
