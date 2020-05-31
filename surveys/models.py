@@ -68,8 +68,8 @@ class Survey(TimeStampedModel):
             'limit': 10000,
             'json': True
         })
-        return f'curl --request "POST" \n' \
-               f'--url {endpoint} \n' \
+        return f'curl --request "POST" ' \
+               f'--url {endpoint} ' \
                f'--data \'{data}\''
 
     def get_response_url(self):
