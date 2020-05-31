@@ -84,3 +84,7 @@ input:focus {
 .label {
     margin: 10px !important;
 }
+
+.red {
+    color: red;
+}
