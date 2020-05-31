@@ -36,6 +36,7 @@ jobs:
           poetry install
       - run: |
           poetry run python manage.py migrate
+          poetry run python manage.py loaddata fixtures.json
           poetry run python manage.py test
       - save_cache:
           key: deps-{{ checksum "poetry.lock" }}
