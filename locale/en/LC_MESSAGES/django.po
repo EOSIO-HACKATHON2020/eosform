@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-31 18:39+0000\n"
+"POT-Creation-Date: 2020-05-31 19:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Survey UID"
 msgstr ""
 
-#: surveys/forms.py:13 surveys/models.py:32 surveys/models.py:165
+#: surveys/forms.py:13 surveys/models.py:32 surveys/models.py:167
 #: templates/surveys/create.html:21
 msgid "Name"
 msgstr ""
@@ -83,31 +83,31 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: surveys/models.py:164 templates/surveys/create.html:92
+#: surveys/models.py:166 templates/surveys/create.html:92
 msgid "Question"
 msgstr ""
 
-#: surveys/models.py:166 templates/surveys/create.html:104
+#: surveys/models.py:168 templates/surveys/create.html:104
 msgid "Description"
 msgstr ""
 
-#: surveys/models.py:167
+#: surveys/models.py:169
 msgid "question's help text"
 msgstr ""
 
-#: surveys/models.py:169
+#: surveys/models.py:171
 msgid "Question Type"
 msgstr ""
 
-#: surveys/models.py:173
+#: surveys/models.py:175
 msgid "Is required?"
 msgstr ""
 
-#: surveys/models.py:174
+#: surveys/models.py:176
 msgid "Question must be answered in order to submit response"
 msgstr ""
 
-#: surveys/models.py:192
+#: surveys/models.py:194
 msgid "Transaction ID"
 msgstr ""
 
@@ -188,7 +188,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: templates/surveys/json.html:9 templates/surveys/survey.html:22
+#: templates/surveys/json.html:18 templates/surveys/survey.html:31
 msgid ""
 "\n"
 "            cURL example how to extract responses via EOS testnet API. Just "
@@ -197,19 +197,23 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/surveys/response.html:13
+#: templates/surveys/json.html:28
+msgid "Response from EOS Node API"
+msgstr ""
+
+#: templates/surveys/response.html:27
 msgid "Submit"
 msgstr ""
 
-#: templates/surveys/survey.html:9
+#: templates/surveys/survey.html:18
 msgid "Publish"
 msgstr ""
 
-#: templates/surveys/survey.html:13
+#: templates/surveys/survey.html:22
 msgid "Response URL to share:"
 msgstr ""
 
-#: templates/surveys/survey.html:18
+#: templates/surveys/survey.html:27
 msgid "Delete"
 msgstr ""
 
