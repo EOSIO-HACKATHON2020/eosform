@@ -1,5 +1,5 @@
 .dashboard-screen {
-    width:100%;
+    width: 500px;
     font-family: 'Poppins', sans-serif;
     text-align: center;
     margin: 20px auto;
@@ -13,11 +13,32 @@
     flex:auto;
     margin: 5px 5px; 
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .row {
-    flex:auto;
-    margin: 5px 5px; 
+    display:flex;
     margin-bottom: 10px;
 }
 
+.row a{
+    flex:auto;
+    margin: 0px 30px; 
+}
+
+@media screen and (max-width:1024px){
+    .dashboard-screen{
+        width:60%;
+    }
+}
+
+@media screen and (max-width:768px){
+    .dashboard-screen{
+        width:80%;
+    }
+
+    .row a{
+        width:80%;
+        margin: 0px 0px; 
+    }
+}

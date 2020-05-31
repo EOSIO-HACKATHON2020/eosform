@@ -3,14 +3,14 @@
 {% load i18n %}
 
 {% block content %}
-    <section>
+    <div class="response-screen">
         <form method="post">
             {% csrf_token %}
             {% if form.errors %}
                 {{ form.errors }}
             {% endif %}
             {{ form.as_p }}
-            <input type="submit" name="submit" value="{% trans "Submit" %}">
+            <button type="submit" class="create-btn" name="submit">{% trans "Submit" %}</button>
         </form>
-    </section>
+    </div>
 {% endblock %}
