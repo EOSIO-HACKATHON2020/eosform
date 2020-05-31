@@ -68,7 +68,7 @@ class Survey(TimeStampedModel):
             'limit': 10000,
             'json': True
         })
-        return f'cURL --request "POST" \n' \
+        return f'curl --request "POST" \n' \
                f'--url {endpoint} \n' \
                f'--data \'{data}\''
 
