@@ -19,6 +19,15 @@
         {% endif %}
     {% endif %}
     <div>
+        {% blocktrans %}
+            cURL example how to extract responses via EOS testnet API. Just copy-paste it into your terminal under
+            macOS or Linux
+        {% endblocktrans %}
+        <code>
+            {{ survey.get_responses_curl }}
+        </code>
+    </div>
+    <div>
         <table>
             <thead>
                 <tr>
@@ -54,6 +63,7 @@
                         code: config.api.contract,
                         table: "response",
                         scope: config.api.scope,
+                        // TODO for production usage this can be handled with chunks and pagination
                         limit: 10000,
                         json: true
                     })

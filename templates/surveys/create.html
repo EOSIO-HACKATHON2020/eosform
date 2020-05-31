@@ -72,7 +72,11 @@
                 }
 
                 if (field.value) {
-                    el.setAttribute("value", field.value)
+                    if (field.tag === "input") {
+                        el.setAttribute("value", field.value)
+                    } else {
+                        el.innerHTML += field.value
+                    }
                 }
                 return el
             }
