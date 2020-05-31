@@ -4,6 +4,10 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
+STATICFILES_FINDERS += [
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 MIDDLEWARE += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
